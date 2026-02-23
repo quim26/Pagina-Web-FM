@@ -8,7 +8,7 @@ header {
     background: linear-gradient(to right, #0a77d6, #f11000);
     display: flex;
     align-items: center;
-    padding: 20px 20px 20px 100px;
+    padding: 20px 50px 20px 100px;
     gap: 30px;
     box-sizing: border-box;
 }
@@ -33,6 +33,16 @@ header > div:first-child {
 h1 {
     margin: 0;
     font-size: 50px;
+    color: #fff;
+    font-family: 'redrose', sans-serif;
+}
+
+header > div:last-child {
+    margin-left: 650px;
+}
+
+header > div:last-child h1 {
+    font-size: 40px;
     color: #fff;
     font-family: 'redrose', sans-serif;
 }
