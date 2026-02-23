@@ -67,3 +67,90 @@ header > div:last-child h1 {
     border-color: #fff;
     background: rgba(255, 255, 255, 0.1);
 }
+
+main h1, h2, h3 {
+    font-family: 'redrose', sans-serif;
+    color: #000;
+}
+
+main p {
+    font-family: 'arial', sans-serif;
+    color: #000;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.noticias {
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.noticias h2 {
+    width: 100%;
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.noticias h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #00bb77;
+    border-radius: 2px;
+}
+
+.noticias > div {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    height: auto;
+}
+
+.noticias h3 {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+}
+
+.noticias p {
+    margin: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+}
+
+.noticias img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.noticias div:hover p {
+    max-height: 500px;
+    opacity: 1;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.noticias div:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(5px);
+}
