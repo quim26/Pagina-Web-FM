@@ -75,7 +75,7 @@ main h1, h2, h3 {
 
 main p {
     font-family: 'arial', sans-serif;
-    color: #000;
+    color: #fff;
     line-height: 1.5;
     text-align: justify;
 }
@@ -86,7 +86,6 @@ main p {
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    align-items: flex-start;
 }
 
 .noticias h2 {
@@ -118,39 +117,56 @@ main p {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
     cursor: pointer;
-    height: auto;
+    box-sizing: border-box;
+    position: relative;
 }
 
 .noticias h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 15px 0;
     font-size: 22px;
+    background: #fff;
 }
 
-.noticias p {
-    margin: 0;
-    max-height: 0;
-    opacity: 0;
+.noticias .img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
     overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+    border-radius: 5px;
 }
 
 .noticias img {
     width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-top: 10px;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.4s ease, transform 0.4s ease;
+    display: block;
 }
 
-.noticias div:hover p {
-    max-height: 500px;
+.noticias p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.noticias > div:hover img {
+    filter: blur(5px) brightness(0.6);
+    transform: scale(1.05);
+}
+
+.noticias > div:hover p {
     opacity: 1;
-    margin-bottom: 15px;
-    margin-top: 10px;
-}
-
-.noticias div:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    transform: translateY(5px);
 }
