@@ -80,15 +80,7 @@ main p {
     text-align: justify;
 }
 
-.noticias {
-    padding: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-}
-
-.noticias h2 {
+h2 {
     width: 100%;
     font-size: 35px;
     text-align: center;
@@ -97,7 +89,7 @@ main p {
     padding-bottom: 15px;
 }
 
-.noticias h2::after {
+h2::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -107,6 +99,14 @@ main p {
     height: 4px;
     background-color: #00bb77;
     border-radius: 2px;
+}
+
+.noticias {
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
 }
 
 .noticias > div {
@@ -169,4 +169,65 @@ main p {
 
 .noticias > div:hover p {
     opacity: 1;
+}
+
+.div_equipos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.tarjeta-equipo-horizontal {
+    display: flex;
+    align-items: center;
+    width: 380px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border-bottom: 5px solid;
+}
+
+.tarjeta-equipo-horizontal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.escudo-contenedor {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.escudo-contenedor img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.info-derecha {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-derecha h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+.info-derecha p {
+    margin: 2px 0;
+    font-size: 14px;
+    text-align: left;
+    color: #333;
+}
+
+.info-derecha p strong {
+    color: #000;
 }
