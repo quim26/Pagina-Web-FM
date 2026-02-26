@@ -208,6 +208,14 @@ h2::after {
     object-fit: contain;
 }
 
+plantilla.html a {
+    text-decoration: none;
+    color: #fff;
+    font-family: 'redrose', sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
 .info-derecha {
     margin-left: 20px;
     display: flex;
@@ -246,6 +254,54 @@ h2::after {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+.header-plantilla {
+    text-align: center;
+    padding: 20px;
+    background-color: #222; 
+}
+
+.header-plantilla h1 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.header-plantilla a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: 'redrose', sans-serif;
+}
+
+.palmares {
+    margin: 20px 0;
+}
+
+.jugadores {
+    padding: 20px;
+}
+
+.div_jugadores {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.contenedor-palmares {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    padding: 25px;
+    background: #fff;
+    border-radius: 15px;
+    margin: 20px auto;
+    width: 90%; 
+    max-width: 1000px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
 .item-palmares {
     flex: 1; 
     display: flex;
@@ -266,6 +322,7 @@ h2::after {
     margin: 5px 0;
     font-size: 1rem;
     text-transform: uppercase;
+    height: 40px; 
     display: flex;
     align-items: center;
     justify-content: center;
