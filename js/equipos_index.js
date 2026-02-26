@@ -63,9 +63,7 @@ async function cargarEquipos() {
 
         equipos.forEach(equipo => {
             const sumaQualitat = equipo.jugadors.reduce((total, j) => total + j.qualitat, 0);
-            const mediaNum = sumaQualitat / equipo.jugadors.length;
-            const mediaTexto = mediaNum.toFixed(1);
-            
+            const media = (sumaQualitat / equipo.jugadors.length).toFixed(1);
             const nombreEstadio = estadios[equipo.equip] || "Estadio Municipal";
             const colores = coloresEquipos[equipo.equip] || "#ccc 50%, #ccc 50%";
             
@@ -74,6 +72,7 @@ async function cargarEquipos() {
 
             const card = document.createElement('div');
             card.className = 'tarjeta-equipo-horizontal'; 
+            card.style.cursor = 'pointer';
             
             card.style.borderImageSource = `linear-gradient(to right, ${colores})`;
             card.style.borderImageSlice = "1";
@@ -86,9 +85,14 @@ async function cargarEquipos() {
                     <h3>${equipo.equip}</h3>
                     <p><strong>Entrenador:</strong> ${equipo.entrenador.nomPersona}</p>
                     <p><strong>Estadio:</strong> ${nombreEstadio}</p>
-                    <p><strong>Media:</strong> ${mediaTexto}</p>
+                    <p><strong>Media:</strong> ${media}</p>
                 </div>
             `;
+
+            card.addEventListener('click', () => {
+                window.location.href = `plantilla.html?equipo=${encodeURIComponent(equipo.equip)}`;
+            });
+
             contenedor.appendChild(card);
         });
     } catch (error) {
