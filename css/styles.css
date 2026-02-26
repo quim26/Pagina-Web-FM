@@ -208,14 +208,6 @@ h2::after {
     object-fit: contain;
 }
 
-plantilla.html a {
-    text-decoration: none;
-    color: #fff;
-    font-family: 'redrose', sans-serif;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
 .info-derecha {
     margin-left: 20px;
     display: flex;
@@ -332,4 +324,41 @@ plantilla.html a {
     font-size: 1.8rem;
     font-weight: 800;
     font-family: 'redrose', sans-serif;
+}
+
+.contenedor-info-general {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 25px;
+    background: #fff;
+    border-radius: 15px;
+    margin: 20px auto;
+    width: 90%; 
+    max-width: 1000px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dato-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.dato-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #666; /* Color grisáceo para la etiqueta */
+    font-weight: 600;
+}
+
+.dato-info p {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    font-family: 'redrose', sans-serif;
+    color: #000;
 }
