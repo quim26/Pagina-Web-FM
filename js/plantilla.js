@@ -4,34 +4,12 @@ async function cargarPlantilla() {
     const seccionPalmares = document.querySelector('.palmares');
     const seccionInfo = document.querySelector('.info-equipo');
     const seccionJugadores = document.querySelector('.jugadores');
+    const canvasTactico = document.getElementById('canvas-tactico');
     
     const params = new URLSearchParams(window.location.search);
     const nombreEquipo = params.get('equipo');
 
     if (!nombreEquipo) return;
-
-    const infoEquipos = {
-        "FC Barcelona": { estadio: "Spotify Camp Nou", ciudad: "Barcelona", fundado: "1899" },
-        "Real Madrid CF": { estadio: "Santiago Bernabéu", ciudad: "Madrid", fundado: "1902" },
-        "Atlético de Madrid": { estadio: "Cívitas Metropolitano", ciudad: "Madrid", fundado: "1903" },
-        "Athletic Club": { estadio: "San Mamés", ciudad: "Bilbao", fundado: "1898" },
-        "Valencia CF": { estadio: "Mestalla", ciudad: "Valencia", fundado: "1919" },
-        "Real Sociedad": { estadio: "Reale Arena", ciudad: "San Sebastián", fundado: "1909" },
-        "Sevilla FC": { estadio: "Ramón Sánchez-Pizjuán", ciudad: "Sevilla", fundado: "1890" },
-        "Real Betis": { estadio: "Benito Villamarín", ciudad: "Sevilla", fundado: "1907" },
-        "Villarreal CF": { estadio: "Estadio de la Cerámica", ciudad: "Villarreal", fundado: "1923" },
-        "Girona FC": { estadio: "Montilivi", ciudad: "Girona", fundado: "1930" },
-        "RC Celta de Vigo": { estadio: "Abanca-Balaídos", ciudad: "Vigo", fundado: "1923" },
-        "Real Valladolid CF": { estadio: "José Zorrilla", ciudad: "Valladolid", fundado: "1928" },
-        "CD Leganés": { estadio: "Butarque", ciudad: "Leganés", fundado: "1928" },
-        "RCD Espanyol": { estadio: "RCDE Stadium", ciudad: "Barcelona", fundado: "1900" },
-        "Rayo Vallecano": { estadio: "Vallecas", ciudad: "Madrid", fundado: "1924" },
-        "Getafe CF": { estadio: "Coliseum", ciudad: "Getafe", fundado: "1983" },
-        "CA Osasuna": { estadio: "El Sadar", ciudad: "Pamplona", fundado: "1920" },
-        "RCD Mallorca": { estadio: "Son Moix", ciudad: "Palma", fundado: "1916" },
-        "UD Las Palmas": { estadio: "Gran Canaria", ciudad: "Las Palmas", fundado: "1949" },
-        "Deportivo Alavés": { estadio: "Mendizorroza", ciudad: "Vitoria", fundado: "1921" }
-    };
 
     const palmaresData = {
         "Real Madrid CF": { liga: 36, copa: 20, supercopa: 13, ucl: 15 },
@@ -42,27 +20,22 @@ async function cargarPlantilla() {
         "Real Sociedad": { liga: 2, copa: 3, supercopa: 1, ucl: 0 },
         "Sevilla FC": { liga: 1, copa: 5, supercopa: 1, ucl: 0 },
         "Real Betis": { liga: 1, copa: 3, supercopa: 0, ucl: 0 },
+        "Villarreal CF": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
+        "Girona FC": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
         "RC Celta de Vigo": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
         "Real Valladolid CF": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
-        "RCD Espanyol": { liga: 0, copa: 4, supercopa: 0, ucl: 0 },
         "CD Leganés": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
-        "Villarreal CF": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
-        "RCD Mallorca": { liga: 0, copa: 1, supercopa: 1, ucl: 0 },
+        "RCD Espanyol": { liga: 0, copa: 4, supercopa: 0, ucl: 0 },
+        "Rayo Vallecano": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
         "Getafe CF": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
         "CA Osasuna": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
-        "Rayo Vallecano": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
-        "Girona FC": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
+        "RCD Mallorca": { liga: 0, copa: 1, supercopa: 1, ucl: 0 },
         "UD Las Palmas": { liga: 0, copa: 0, supercopa: 0, ucl: 0 },
         "Deportivo Alavés": { liga: 0, copa: 0, supercopa: 0, ucl: 0 }
     };
 
     const ordenPrioridad = { "PORTER": 1, "DEFENSA": 2, "MIGCAMPISTA": 3, "DAVANTER": 4 };
-    const traduccionPosiciones = { 
-        "PORTER": "Portero", 
-        "DEFENSA": "Defensa", 
-        "MIGCAMPISTA": "Mediocentro", 
-        "DAVANTER": "Delantero" 
-    };
+    const traduccionPosiciones = { "PORTER": "Portero", "DEFENSA": "Defensa", "MIGCAMPISTA": "Mediocentro", "DAVANTER": "Delantero" };
 
     try {
         const respuesta = await fetch('json/jugadores.json');
@@ -70,85 +43,45 @@ async function cargarPlantilla() {
         const equipo = equipos.find(e => e.equip === nombreEquipo);
 
         if (equipo) {
-            titulo.innerText = `${equipo.equip}`;
+            titulo.innerText = equipo.equip;
 
-            const info = infoEquipos[nombreEquipo] || { estadio: "Desconocido", ciudad: "Desconocida", fundado: "N/A" };
             seccionInfo.innerHTML = `
                 <div class="contenedor-info-general">
                     <div class="dato-info"><h3>Equipo</h3><p>${equipo.equip}</p></div>
-                    <div class="dato-info"><h3>Estadio</h3><p>${info.estadio}</p></div>
-                    <div class="dato-info"><h3>Ciudad</h3><p>${info.ciudad}</p></div>
-                    <div class="dato-info"><h3>Fundado</h3><p>${info.fundado}</p></div>
+                    <div class="dato-info"><h3>Entrenador</h3><p>${equipo.entrenador.nomPersona}</p></div>
                 </div>
             `;
             
             const trofeos = palmaresData[nombreEquipo] || { liga: 0, copa: 0, supercopa: 0, ucl: 0 };
             seccionPalmares.innerHTML = `
                 <div class="contenedor-palmares">
-                    <div class="item-palmares">
-                        <img src="img/trofeos/liga.png" alt="La Liga">
-                        <h3>La Liga</h3>
-                        <span class="cantidad">${trofeos.liga}</span>
-                    </div>
-                    <div class="item-palmares">
-                        <img src="img/trofeos/copa.png" alt="Copa del Rey">
-                        <h3>Copa del Rey</h3>
-                        <span class="cantidad">${trofeos.copa}</span>
-                    </div>
-                    <div class="item-palmares">
-                        <img src="img/trofeos/supercopa.png" alt="Supercopa">
-                        <h3>Supercopa</h3>
-                        <span class="cantidad">${trofeos.supercopa}</span>
-                    </div>
-                    <div class="item-palmares">
-                        <img src="img/trofeos/ucl.png" alt="UCL">
-                        <h3>Champions League</h3>
-                        <span class="cantidad">${trofeos.ucl}</span>
-                    </div>
+                    <div class="item-palmares"><img src="img/trofeos/liga.png" alt="La Liga"><h3>La Liga</h3><span class="cantidad">${trofeos.liga}</span></div>
+                    <div class="item-palmares"><img src="img/trofeos/copa.png" alt="Copa del Rey"><h3>Copa del Rey</h3><span class="cantidad">${trofeos.copa}</span></div>
+                    <div class="item-palmares"><img src="img/trofeos/supercopa.png" alt="Supercopa"><h3>Supercopa</h3><span class="cantidad">${trofeos.supercopa}</span></div>
+                    <div class="item-palmares"><img src="img/trofeos/ucl.png" alt="UCL"><h3>Champions League</h3><span class="cantidad">${trofeos.ucl}</span></div>
                 </div>
             `;
 
-            if (!document.querySelector('.seccion-titulo-contenedor')) {
-                const divTitulo = document.createElement('div');
-                divTitulo.className = 'seccion-titulo-contenedor';
-                divTitulo.innerHTML = `
-                    <h2>Jugadores</h2>
-                    <div class="barra-verde"></div>
-                `;
-                seccionJugadores.insertBefore(divTitulo, contenedor);
-            }
+            dibujarCampoTactico(equipo.jugadors, canvasTactico, equipo.entrenador);
 
             const jugadoresOrdenados = [...equipo.jugadors].sort((a, b) => {
                 const pA = a.posicio.trim().toUpperCase();
                 const pB = b.posicio.trim().toUpperCase();
-                const prioridadA = ordenPrioridad[pA] || 99;
-                const prioridadB = ordenPrioridad[pB] || 99;
-                
-                if (prioridadA !== prioridadB) {
-                    return prioridadA - prioridadB;
-                }
-                return b.qualitat - a.qualitat;
+                return (ordenPrioridad[pA] || 99) - (ordenPrioridad[pB] || 99) || b.qualitat - a.qualitat;
             });
 
             contenedor.innerHTML = '';
             jugadoresOrdenados.forEach(jugador => {
-                let rutaLimpia = jugador.foto.replace(/\\/g, '/');
-                if (rutaLimpia.startsWith('../')) {
-                    rutaLimpia = rutaLimpia.substring(3);
-                }
-
                 const posKey = jugador.posicio.trim().toUpperCase();
-
                 const card = document.createElement('div');
                 card.className = 'tarjeta-equipo-horizontal';
                 card.innerHTML = `
                     <div class="escudo-contenedor">
-                        <img src="${rutaLimpia}" alt="${jugador.nomPersona}" onerror="this.src='img/logos/default_player.png'">
+                        <img src="${jugador.foto}" alt="${jugador.nomPersona}" onerror="this.src='img/logos/default_player.png'">
                     </div>
                     <div class="info-derecha">
                         <h3>${jugador.nomPersona}</h3>
                         <p><strong>Posición:</strong> ${traduccionPosiciones[posKey] || jugador.posicio}</p>
-                        <p><strong>Dorsal:</strong> ${jugador.dorsal}</p>
                         <p><strong>Calidad:</strong> ${jugador.qualitat}</p>
                     </div>
                 `;
@@ -159,4 +92,48 @@ async function cargarPlantilla() {
         console.error(error);
     }
 }
+
+function dibujarCampoTactico(jugadores, contenedor, entrenador) {
+    const getBest = (p) => jugadores.filter(j => j.posicio.trim().toUpperCase() === p).sort((a, b) => b.qualitat - a.qualitat)[0];
+    
+    const alineacion = {
+        portero: getBest("PORTER"),
+        cierre: getBest("DEFENSA"),
+        alas: jugadores.filter(j => j.posicio.trim().toUpperCase() === "MIGCAMPISTA").sort((a, b) => b.qualitat - a.qualitat),
+        pivot: getBest("DAVANTER")
+    };
+
+    let html = `
+        <div class="campo-futbol">
+            <div class="linea linea-central"></div>
+            <div class="circulo-central"></div>
+            <div class="area izquierda"></div><div class="area derecha"></div>
+            <div class="porteria izquierda"></div><div class="porteria derecha"></div>
+            <div class="zona-banquillo">
+                <div class="ficha-entrenador"><img src="${entrenador.foto}" onerror="this.src='img/logos/default_player.png'"></div>
+                <div class="info-entrenador"><span>Entrenador</span><h4>${entrenador.nomPersona}</h4></div>
+            </div>`;
+
+    const pos = [
+        { j: alineacion.portero, t: 50, l: 12 },
+        { j: alineacion.cierre, t: 50, l: 32 },
+        { j: alineacion.alas[0], t: 25, l: 55 },
+        { j: alineacion.alas[1] || alineacion.alas[0], t: 75, l: 55 },
+        { j: alineacion.pivot, t: 50, l: 82 }
+    ];
+
+    pos.forEach(p => {
+        if (!p.j) return;
+        html += `
+            <div class="ficha-jugador local" style="top:${p.t}%; left:${p.l}%; transform:translate(-50%,-50%)">
+                <div class="contenedor-foto-ficha">
+                    <img src="${p.j.foto}" onerror="this.src='img/logos/default_player.png'">
+                </div>
+                <div class="nombre-ficha">${p.j.nomPersona.split(' ').pop()}</div>
+            </div>`;
+    });
+
+    contenedor.innerHTML = html + `</div>`;
+}
+
 document.addEventListener('DOMContentLoaded', cargarPlantilla);

@@ -66,20 +66,16 @@ async function cargarEquipos() {
             const media = (sumaQualitat / equipo.jugadors.length).toFixed(1);
             const nombreEstadio = estadios[equipo.equip] || "Estadio Municipal";
             const colores = coloresEquipos[equipo.equip] || "#ccc 50%, #ccc 50%";
-            
-            let nombreImagen = equipo.escut.split('\\').pop(); 
-            let rutaFinal = `img/equipos/${nombreImagen}`;
 
             const card = document.createElement('div');
             card.className = 'tarjeta-equipo-horizontal'; 
             card.style.cursor = 'pointer';
-            
             card.style.borderImageSource = `linear-gradient(to right, ${colores})`;
             card.style.borderImageSlice = "1";
 
             card.innerHTML = `
                 <div class="escudo-contenedor">
-                    <img src="${rutaFinal}" alt="${equipo.equip}">
+                    <img src="${equipo.escut}" alt="${equipo.equip}" onerror="this.src='img/equipos/default.png'">
                 </div>
                 <div class="info-derecha">
                     <h3>${equipo.equip}</h3>

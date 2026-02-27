@@ -376,3 +376,204 @@ h2::after {
     margin: 0;
     text-transform: uppercase;
 }
+
+/* --- ESTILOS DEL CAMPO DE FÚTBOL 5 --- */
+.seccion-tactica {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    text-align: center;
+    font-family: 'redrose', sans-serif;
+}
+
+.contenedor-canvas-futbol {
+    perspective: 1000px; /* Efecto 3D sutil */
+    margin-top: 20px;
+}
+
+.campo-futbol {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Proporción del campo */
+    background-color: #2e7d32; /* Verde césped */
+    border: 5px solid #fff;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    /* Fondo con rayas de césped */
+    background-image: repeating-linear-gradient(
+        90deg,
+        #2e7d32,
+        #2e7d32 50px,
+        #388e3c 50px,
+        #388e3c 100px
+    );
+    transform: rotateX(10deg); /* Inclinación táctica */
+}
+
+/* Líneas del campo */
+.linea { position: absolute; background-color: rgba(255,255,255,0.8); }
+
+.linea-central {
+    height: 100%;
+    width: 3px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.circulo-central {
+    width: 20%;
+    aspect-ratio: 1;
+    border: 3px solid rgba(255,255,255,0.8);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+/* Áreas (Simplificadas para F5) */
+.area {
+    border: 3px solid rgba(255,255,255,0.8);
+    position: absolute;
+    height: 60%;
+    width: 15%;
+    top: 20%;
+}
+
+.area.izquierda {
+    left: -2px;
+    border-radius: 0 50% 50% 0;
+    border-left: none;
+}
+
+.area.derecha {
+    right: -2px;
+    border-radius: 50% 0 0 50%;
+    border-right: none;
+}
+
+/* Porterías */
+.porteria {
+    position: absolute;
+    width: 3%;
+    height: 25%;
+    background: rgba(255,255,255,0.2);
+    border: 3px solid #fff;
+    top: 37.5%;
+    z-index: 1;
+}
+
+.porteria.izquierda { left: -15px; border-radius: 5px 0 0 5px; }
+.porteria.derecha { right: -15px; border-radius: 0 5px 5px 0; }
+
+/* --- ESTILOS DE LAS FICHAS DE JUGADORES (PLAYERS) --- */
+.ficha-jugador {
+    position: absolute;
+    width: 8%; /* Tamaño relativo al campo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.ficha-jugador:hover { transform: scale(1.1) translateZ(10px); z-index: 20; }
+
+.contenedor-foto-ficha {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    overflow: hidden;
+    background: #ccc;
+    position: relative;
+}
+
+.ficha-jugador.local .contenedor-foto-ficha { border-color: #ffeb3b; /* Amarillo Local */ }
+.ficha-jugador.visitante .contenedor-foto-ficha { border-color: #2196f3; /* Azul Visitante */ }
+
+.contenedor-foto-ficha img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Dorsal en la ficha */
+.dorsal-ficha {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: #000;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.nombre-ficha {
+    color: #fff;
+    background: rgba(0,0,0,0.7);
+    font-size: 0.75rem;
+    padding: 2px 5px;
+    border-radius: 4px;
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120%;
+}
+
+.zona-banquillo {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #fff;
+    z-index: 30;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.ficha-entrenador {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    overflow: hidden;
+    background: #444;
+    flex-shrink: 0;
+}
+
+.ficha-entrenador img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-entrenador {
+    text-align: left;
+}
+
+.info-entrenador h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-family: 'redrose', sans-serif;
+}
+
+.info-entrenador span {
+    font-size: 0.7rem;
+    color: #28a745;
+    text-transform: uppercase;
+    font-weight: bold;
+}
