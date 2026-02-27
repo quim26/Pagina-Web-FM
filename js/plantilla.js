@@ -3,6 +3,7 @@ async function cargarPlantilla() {
     const titulo = document.getElementById('nombre-equipo-titulo');
     const seccionPalmares = document.querySelector('.palmares');
     const seccionInfo = document.querySelector('.info-equipo');
+    const seccionJugadores = document.querySelector('.jugadores');
     
     const params = new URLSearchParams(window.location.search);
     const nombreEquipo = params.get('equipo');
@@ -55,6 +56,14 @@ async function cargarPlantilla() {
         "Deportivo Alavés": { liga: 0, copa: 0, supercopa: 0, ucl: 0 }
     };
 
+    const ordenPrioridad = { "PORTER": 1, "DEFENSA": 2, "MIGCAMPISTA": 3, "DAVANTER": 4 };
+    const traduccionPosiciones = { 
+        "PORTER": "Portero", 
+        "DEFENSA": "Defensa", 
+        "MIGCAMPISTA": "Mediocentro", 
+        "DAVANTER": "Delantero" 
+    };
+
     try {
         const respuesta = await fetch('json/jugadores.json');
         const equipos = await respuesta.json();
@@ -66,22 +75,10 @@ async function cargarPlantilla() {
             const info = infoEquipos[nombreEquipo] || { estadio: "Desconocido", ciudad: "Desconocida", fundado: "N/A" };
             seccionInfo.innerHTML = `
                 <div class="contenedor-info-general">
-                    <div class="dato-info">
-                        <h3>Equipo</h3>
-                        <p>${equipo.equip}</p>
-                    </div>
-                    <div class="dato-info">
-                        <h3>Estadio</h3>
-                        <p>${info.estadio}</p>
-                    </div>
-                    <div class="dato-info">
-                        <h3>Ciudad</h3>
-                        <p>${info.ciudad}</p>
-                    </div>
-                    <div class="dato-info">
-                        <h3>Fundado</h3>
-                        <p>${info.fundado}</p>
-                    </div>
+                    <div class="dato-info"><h3>Equipo</h3><p>${equipo.equip}</p></div>
+                    <div class="dato-info"><h3>Estadio</h3><p>${info.estadio}</p></div>
+                    <div class="dato-info"><h3>Ciudad</h3><p>${info.ciudad}</p></div>
+                    <div class="dato-info"><h3>Fundado</h3><p>${info.fundado}</p></div>
                 </div>
             `;
             
@@ -111,19 +108,46 @@ async function cargarPlantilla() {
                 </div>
             `;
 
+            if (!document.querySelector('.seccion-titulo-contenedor')) {
+                const divTitulo = document.createElement('div');
+                divTitulo.className = 'seccion-titulo-contenedor';
+                divTitulo.innerHTML = `
+                    <h2>Jugadores</h2>
+                    <div class="barra-verde"></div>
+                `;
+                seccionJugadores.insertBefore(divTitulo, contenedor);
+            }
+
+            const jugadoresOrdenados = [...equipo.jugadors].sort((a, b) => {
+                const pA = a.posicio.trim().toUpperCase();
+                const pB = b.posicio.trim().toUpperCase();
+                const prioridadA = ordenPrioridad[pA] || 99;
+                const prioridadB = ordenPrioridad[pB] || 99;
+                
+                if (prioridadA !== prioridadB) {
+                    return prioridadA - prioridadB;
+                }
+                return b.qualitat - a.qualitat;
+            });
+
             contenedor.innerHTML = '';
-            equipo.jugadors.forEach(jugador => {
-                let nombreFoto = jugador.foto.split('\\').pop();
-                let rutaFoto = `img/jugadores/${nombreFoto}`;
+            jugadoresOrdenados.forEach(jugador => {
+                let rutaLimpia = jugador.foto.replace(/\\/g, '/');
+                if (rutaLimpia.startsWith('../')) {
+                    rutaLimpia = rutaLimpia.substring(3);
+                }
+
+                const posKey = jugador.posicio.trim().toUpperCase();
+
                 const card = document.createElement('div');
                 card.className = 'tarjeta-equipo-horizontal';
                 card.innerHTML = `
                     <div class="escudo-contenedor">
-                        <img src="${rutaFoto}" alt="${jugador.nomPersona}" onerror="this.src='img/logos/default_player.png'">
+                        <img src="${rutaLimpia}" alt="${jugador.nomPersona}" onerror="this.src='img/logos/default_player.png'">
                     </div>
                     <div class="info-derecha">
                         <h3>${jugador.nomPersona}</h3>
-                        <p><strong>Posición:</strong> ${jugador.posicio}</p>
+                        <p><strong>Posición:</strong> ${traduccionPosiciones[posKey] || jugador.posicio}</p>
                         <p><strong>Dorsal:</strong> ${jugador.dorsal}</p>
                         <p><strong>Calidad:</strong> ${jugador.qualitat}</p>
                     </div>
