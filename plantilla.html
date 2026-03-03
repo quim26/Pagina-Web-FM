@@ -1,36 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantilla del Equipo</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <header class="header-plantilla">
-        <h1 id="nombre-equipo-titulo">Cargando plantilla...</h1>
-        <a href="Index.html">← Inicio</a>
-    </header>
-    <main>
-        <section class="info-equipo">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Plantilla del Equipo</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <header class="header-plantilla">
+            <h1 id="nombre-equipo-titulo">Cargando plantilla...</h1>
+            <a href="Index.html">← Inicio</a>
+        </header>
+        <main>
+            <section class="seccion-partidos">
+                <h2 class="titulo-seccion">Resultados de la Jornada</h2>
+                <div id="contenedor-partidos-plantilla" class="contenedor-partidos">
+                    </div>
             </section>
-        
-        <section class="palmares">
-            </section>
-
-        <section class="seccion-tactica">
-            <div class="seccion-titulo-contenedor">
-                <h2>Alineación Ideal Fútbol 5</h2>
-                <div class="barra-verde"></div>
-            </div>
-            <div id="canvas-tactico" class="contenedor-canvas-futbol">
-                </div>
-        </section>
-
-        <section class="jugadores">
-            <div id="contenedor-jugadores" class="div_jugadores"></div>
-        </section>
-    </main>
-    <script src="js/plantilla.js"></script>
-</body>
+        </main>
+        <script src="js/resultados.js"></script>
+    </body>
 </html>

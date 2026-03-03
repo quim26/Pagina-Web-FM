@@ -199,5 +199,4 @@ function dibujarCampoTactico(jugadores, contenedor, entrenador) {
 
     contenedor.innerHTML = html + `</div>`;
 }
-
 document.addEventListener('DOMContentLoaded', cargarPlantilla);

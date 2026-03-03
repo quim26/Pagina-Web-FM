@@ -87,6 +87,7 @@ h2 {
     margin-bottom: 20px;
     position: relative;
     padding-bottom: 15px;
+    text-transform: uppercase;
 }
 
 h2::after {
@@ -600,13 +601,11 @@ h2::after {
 }
 
 .tarjeta-partido {
-    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    backdrop-filter: blur(10px);
     padding: 10px 15px;
     min-width: 300px;
     gap: 10px;
@@ -647,7 +646,7 @@ h2::after {
 .vs {
     font-size: 1.5rem;
     font-family: 'redrose', sans-serif;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(0, 0, 0, 0.8);
 }
 
 .estadio-partido {
@@ -664,4 +663,48 @@ h2::after {
 .contenedor-partidos::-webkit-scrollbar-thumb {
     background: #00bb77;
     border-radius: 10px;
+}
+
+.contenedor-partidos-anteriores {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px;
+    padding: 20px;
+    align-items: center; 
+}
+
+.tarjeta-partido-anterior {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    width: 100%; 
+    max-width: 600px; 
+    min-height: 120px; 
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.equipo-partido-anterior img {
+    width: 70px; 
+    height: 70px;
+}
+
+.equipo-partido h2 {
+    font-size: 1.5rem; 
+    margin-top: 5px;
+}
+
+.vs-anterior {
+    font-size: 2rem; 
+    font-weight: 900;
+    color: #000;
+    text-align: center;
+}
+
+.fecha-partido-anterior {
+    font-size: 1rem;
+    margin-bottom: 5px;
 }
