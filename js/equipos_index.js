@@ -81,7 +81,6 @@ async function cargarEquipos() {
                     <h3>${equipo.equip}</h3>
                     <p><strong>Entrenador:</strong> ${equipo.entrenador.nomPersona}</p>
                     <p><strong>Estadio:</strong> ${extra.estadio}</p>
-                    <p><strong>Fundado:</strong> ${extra.fundado}</p>
                     <p><strong>Media:</strong> ${media}</p>
                 </div>
             `;
