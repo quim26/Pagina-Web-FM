@@ -532,27 +532,28 @@ h2::after {
 
 .zona-banquillo {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 15px;
+    left: 15px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 8px 12px;
-    border-radius: 8px;
+    gap: 12px; 
+    background: rgba(0, 0, 0, 0.75);
+    padding: 10px 15px;
+    border-radius: 10px;
     color: #fff;
     z-index: 30;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .ficha-entrenador {
-    width: 45px;
-    height: 45px;
+    width: 65px; 
+    height: 65px; 
     border-radius: 50%;
     border: 2px solid #fff;
     overflow: hidden;
     background: #444;
     flex-shrink: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
 
 .ficha-entrenador img {
@@ -567,7 +568,7 @@ h2::after {
 
 .info-entrenador h4 {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 1rem; 
     font-family: 'redrose', sans-serif;
 }
 

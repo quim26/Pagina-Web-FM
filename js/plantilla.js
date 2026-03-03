@@ -3,13 +3,35 @@ async function cargarPlantilla() {
     const titulo = document.getElementById('nombre-equipo-titulo');
     const seccionPalmares = document.querySelector('.palmares');
     const seccionInfo = document.querySelector('.info-equipo');
-    const seccionJugadores = document.querySelector('.jugadores');
     const canvasTactico = document.getElementById('canvas-tactico');
     
     const params = new URLSearchParams(window.location.search);
     const nombreEquipo = params.get('equipo');
 
     if (!nombreEquipo) return;
+
+    const infoAdicional = {
+        "FC Barcelona": { estadio: "Spotify Camp Nou", fundado: "1899" },
+        "Real Madrid CF": { estadio: "Santiago Bernabéu", fundado: "1902" },
+        "Atlético de Madrid": { estadio: "Cívitas Metropolitano", fundado: "1903" },
+        "Villarreal CF": { estadio: "Estadio de la Cerámica", fundado: "1923" },
+        "Sevilla FC": { estadio: "Ramón Sánchez-Pizjuán", fundado: "1890" },
+        "Real Sociedad": { estadio: "Reale Arena", fundado: "1909" },
+        "Athletic Club": { estadio: "San Mamés", fundado: "1898" },
+        "Real Betis": { estadio: "Benito Villamarín", fundado: "1907" },
+        "Valencia CF": { estadio: "Mestalla", fundado: "1919" },
+        "CA Osasuna": { estadio: "El Sadar", fundado: "1920" },
+        "Girona FC": { estadio: "Montilivi", fundado: "1930" },
+        "Rayo Vallecano": { estadio: "Estadio de Vallecas", fundado: "1924" },
+        "RC Celta de Vigo": { estadio: "Abanca-Balaídos", fundado: "1923" },
+        "RCD Mallorca": { estadio: "Visit Mallorca Estadi", fundado: "1916" },
+        "Deportivo Alavés": { estadio: "Mendizorroza", fundado: "1921" },
+        "UD Las Palmas": { estadio: "Estadio de Gran Canaria", fundado: "1949" },
+        "Getafe CF": { estadio: "Coliseum", fundado: "1983" },
+        "CD Leganés": { estadio: "Estadio Municipal de Butarque", fundado: "1928" },
+        "RCD Espanyol": { estadio: "RCDE Stadium", fundado: "1900" },
+        "Real Valladolid CF": { estadio: "Estadio José Zorrilla", fundado: "1928" }
+    };
 
     const palmaresData = {
         "Real Madrid CF": { liga: 36, copa: 20, supercopa: 13, ucl: 15 },
@@ -44,11 +66,14 @@ async function cargarPlantilla() {
 
         if (equipo) {
             titulo.innerText = equipo.equip;
+            const extra = infoAdicional[nombreEquipo] || { estadio: "Desconocido", fundado: "N/A" };
 
             seccionInfo.innerHTML = `
                 <div class="contenedor-info-general">
                     <div class="dato-info"><h3>Equipo</h3><p>${equipo.equip}</p></div>
                     <div class="dato-info"><h3>Entrenador</h3><p>${equipo.entrenador.nomPersona}</p></div>
+                    <div class="dato-info"><h3>Estadio</h3><p>${extra.estadio}</p></div>
+                    <div class="dato-info"><h3>Fundado</h3><p>${extra.fundado}</p></div>
                 </div>
             `;
             
@@ -82,6 +107,7 @@ async function cargarPlantilla() {
                     <div class="info-derecha">
                         <h3>${jugador.nomPersona}</h3>
                         <p><strong>Posición:</strong> ${traduccionPosiciones[posKey] || jugador.posicio}</p>
+                        <p><strong>Dorsal:</strong> ${jugador.dorsal}</p>
                         <p><strong>Calidad:</strong> ${jugador.qualitat}</p>
                     </div>
                 `;
@@ -94,14 +120,48 @@ async function cargarPlantilla() {
 }
 
 function dibujarCampoTactico(jugadores, contenedor, entrenador) {
-    const getBest = (p) => jugadores.filter(j => j.posicio.trim().toUpperCase() === p).sort((a, b) => b.qualitat - a.qualitat)[0];
-    
-    const alineacion = {
-        portero: getBest("PORTER"),
-        cierre: getBest("DEFENSA"),
-        alas: jugadores.filter(j => j.posicio.trim().toUpperCase() === "MIGCAMPISTA").sort((a, b) => b.qualitat - a.qualitat),
-        pivot: getBest("DAVANTER")
+    const ordenPos = ["PORTER", "DEFENSA", "MIGCAMPISTA", "DAVANTER"];
+    let seleccionados = [];
+    let usados = new Set();
+
+    const mapaConteo = { "PORTER": 0, "DEFENSA": 0, "MIGCAMPISTA": 0, "DAVANTER": 0 };
+    const maxPorPos = 2;
+
+    ordenPos.forEach(pos => {
+        const enPos = jugadores
+            .filter(j => j.posicio.trim().toUpperCase() === pos)
+            .sort((a, b) => b.qualitat - a.qualitat);
+        
+        enPos.forEach(j => {
+            if (seleccionados.length < 5 && !usados.has(j.nomPersona) && mapaConteo[pos] < maxPorPos) {
+                seleccionados.push({ ...j, posTactiva: pos });
+                usados.has(j.nomPersona);
+                mapaConteo[pos]++;
+                usados.add(j.nomPersona);
+            }
+        });
+    });
+
+    if (seleccionados.length < 5) {
+        const restantes = jugadores
+            .filter(j => !usados.has(j.nomPersona))
+            .sort((a, b) => b.qualitat - a.qualitat);
+        while (seleccionados.length < 5 && restantes.length > 0) {
+            const extra = restantes.shift();
+            seleccionados.push({ ...extra, posTactiva: "COMODIN" });
+            usados.add(extra.nomPersona);
+        }
+    }
+
+    const coords = {
+        "PORTER": [{ t: 50, l: 12 }, { t: 35, l: 15 }],
+        "DEFENSA": [{ t: 50, l: 32 }, { t: 30, l: 32 }, { t: 70, l: 32 }],
+        "MIGCAMPISTA": [{ t: 50, l: 55 }, { t: 25, l: 55 }, { t: 75, l: 55 }],
+        "DAVANTER": [{ t: 50, l: 82 }, { t: 35, l: 82 }, { t: 65, l: 82 }],
+        "COMODIN": [{ t: 15, l: 45 }, { t: 85, l: 45 }, { t: 15, l: 70 }]
     };
+
+    let conteoVisual = { "PORTER": 0, "DEFENSA": 0, "MIGCAMPISTA": 0, "DAVANTER": 0, "COMODIN": 0 };
 
     let html = `
         <div class="campo-futbol">
@@ -114,22 +174,26 @@ function dibujarCampoTactico(jugadores, contenedor, entrenador) {
                 <div class="info-entrenador"><span>Entrenador</span><h4>${entrenador.nomPersona}</h4></div>
             </div>`;
 
-    const pos = [
-        { j: alineacion.portero, t: 50, l: 12 },
-        { j: alineacion.cierre, t: 50, l: 32 },
-        { j: alineacion.alas[0], t: 25, l: 55 },
-        { j: alineacion.alas[1] || alineacion.alas[0], t: 75, l: 55 },
-        { j: alineacion.pivot, t: 50, l: 82 }
-    ];
+    seleccionados.forEach(j => {
+        let p;
+        let r = j.posTactiva;
 
-    pos.forEach(p => {
-        if (!p.j) return;
+        if (mapaConteo[r] === 2 && r !== "COMODIN") {
+            p = coords[r][conteoVisual[r] + 1];
+        } else if (r !== "COMODIN") {
+            p = coords[r][0];
+        } else {
+            p = coords["COMODIN"][conteoVisual["COMODIN"]];
+        }
+        
+        conteoVisual[r]++;
+
         html += `
             <div class="ficha-jugador local" style="top:${p.t}%; left:${p.l}%; transform:translate(-50%,-50%)">
                 <div class="contenedor-foto-ficha">
-                    <img src="${p.j.foto}" onerror="this.src='img/logos/default_player.png'">
+                    <img src="${j.foto}" onerror="this.src='img/logos/default_player.png'">
                 </div>
-                <div class="nombre-ficha">${p.j.nomPersona.split(' ').pop()}</div>
+                <div class="nombre-ficha">${j.nomPersona.split(' ').pop()}</div>
             </div>`;
     });
 

@@ -7,27 +7,27 @@ async function cargarEquipos() {
         if (!respuesta.ok) throw new Error("No se encontró el JSON");
         const equipos = await respuesta.json();
 
-        const estadios = {
-            "FC Barcelona": "Spotify Camp Nou",
-            "Real Madrid CF": "Santiago Bernabéu",
-            "Atlético de Madrid": "Cívitas Metropolitano",
-            "Villarreal CF": "Estadio de la Cerámica",
-            "Sevilla FC": "Ramón Sánchez-Pizjuán",
-            "Real Sociedad": "Reale Arena",
-            "Athletic Club": "San Mamés",
-            "Real Betis": "Benito Villamarín",
-            "Valencia CF": "Mestalla",
-            "CA Osasuna": "El Sadar",
-            "Girona FC": "Montilivi",
-            "Rayo Vallecano": "Estadio de Vallecas",
-            "RC Celta de Vigo": "Abanca-Balaídos",
-            "RCD Mallorca": "Visit Mallorca Estadi",
-            "Deportivo Alavés": "Mendizorroza",
-            "UD Las Palmas": "Estadio de Gran Canaria",
-            "Getafe CF": "Coliseum",
-            "CD Leganés": "Estadio Municipal de Butarque",
-            "RCD Espanyol": "RCDE Stadium",
-            "Real Valladolid CF": "Estadio José Zorrilla"
+        const infoAdicional = {
+            "FC Barcelona": { estadio: "Spotify Camp Nou", fundado: "1899" },
+            "Real Madrid CF": { estadio: "Santiago Bernabéu", fundado: "1902" },
+            "Atlético de Madrid": { estadio: "Cívitas Metropolitano", fundado: "1903" },
+            "Villarreal CF": { estadio: "Estadio de la Cerámica", fundado: "1923" },
+            "Sevilla FC": { estadio: "Ramón Sánchez-Pizjuán", fundado: "1890" },
+            "Real Sociedad": { estadio: "Reale Arena", fundado: "1909" },
+            "Athletic Club": { estadio: "San Mamés", fundado: "1898" },
+            "Real Betis": { estadio: "Benito Villamarín", fundado: "1907" },
+            "Valencia CF": { estadio: "Mestalla", fundado: "1919" },
+            "CA Osasuna": { estadio: "El Sadar", fundado: "1920" },
+            "Girona FC": { estadio: "Montilivi", fundado: "1930" },
+            "Rayo Vallecano": { estadio: "Estadio de Vallecas", fundado: "1924" },
+            "RC Celta de Vigo": { estadio: "Abanca-Balaídos", fundado: "1923" },
+            "RCD Mallorca": { estadio: "Visit Mallorca Estadi", fundado: "1916" },
+            "Deportivo Alavés": { estadio: "Mendizorroza", fundado: "1921" },
+            "UD Las Palmas": { estadio: "Estadio de Gran Canaria", fundado: "1949" },
+            "Getafe CF": { estadio: "Coliseum", fundado: "1983" },
+            "CD Leganés": { estadio: "Estadio Municipal de Butarque", fundado: "1928" },
+            "RCD Espanyol": { estadio: "RCDE Stadium", fundado: "1900" },
+            "Real Valladolid CF": { estadio: "Estadio José Zorrilla", fundado: "1928" }
         };
 
         const coloresEquipos = {
@@ -64,7 +64,7 @@ async function cargarEquipos() {
         equipos.forEach(equipo => {
             const sumaQualitat = equipo.jugadors.reduce((total, j) => total + j.qualitat, 0);
             const media = (sumaQualitat / equipo.jugadors.length).toFixed(1);
-            const nombreEstadio = estadios[equipo.equip] || "Estadio Municipal";
+            const extra = infoAdicional[equipo.equip] || { estadio: "Estadio Municipal", fundado: "N/A" };
             const colores = coloresEquipos[equipo.equip] || "#ccc 50%, #ccc 50%";
 
             const card = document.createElement('div');
@@ -80,7 +80,8 @@ async function cargarEquipos() {
                 <div class="info-derecha">
                     <h3>${equipo.equip}</h3>
                     <p><strong>Entrenador:</strong> ${equipo.entrenador.nomPersona}</p>
-                    <p><strong>Estadio:</strong> ${nombreEstadio}</p>
+                    <p><strong>Estadio:</strong> ${extra.estadio}</p>
+                    <p><strong>Fundado:</strong> ${extra.fundado}</p>
                     <p><strong>Media:</strong> ${media}</p>
                 </div>
             `;
