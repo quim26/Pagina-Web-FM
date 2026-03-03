@@ -708,3 +708,91 @@ h2::after {
     font-size: 1rem;
     margin-bottom: 5px;
 }
+
+.seccion-clasificacion {
+    width: 95%;
+    max-width: 1000px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.tabla-clasificacion {
+    width: 100%;
+    border-collapse: collapse;
+    color: #333;
+}
+
+.tabla-clasificacion th, 
+.tabla-clasificacion td {
+    padding: 12px;
+    text-align: center;
+    font-family: 'redrose', sans-serif;
+}
+
+.equipo-tabla {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.tabla-clasificacion td.equipo-tabla {
+    text-align: left;
+}
+
+.equipo-tabla p {
+    margin: 0;
+    font-weight: 500;
+    text-align: left;
+    color: #000;
+}
+
+.tabla-clasificacion th:nth-child(2) {
+    text-align: left;
+    padding-left: 55px;
+}
+
+.equipo-tabla img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.pts-col {
+    background-color: #f0fdf4;
+    color: #00a86b;
+}
+
+.tabla-clasificacion tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* Colores de las zonas */
+.zona-champions td:first-child {
+    border-left: 5px solid #4285f4; /* Azul Champions */
+}
+
+.zona-europa-league td:first-child {
+    border-left: 5px solid #ffa000; /* Naranja Europa League */
+}
+
+.zona-conference td:first-child {
+    border-left: 5px solid #00c853; /* Verde Conference */
+}
+
+.zona-descenso td:first-child {
+    border-left: 5px solid #d32f2f; /* Rojo Descenso */
+}
+
+/* Opcional: Fondos muy sutiles para las filas */
+.zona-champions { background-color: rgba(66, 133, 244, 0.03); }
+.zona-europa-league { background-color: rgba(255, 160, 0, 0.03); }
+.zona-conference { background-color: rgba(0, 200, 83, 0.015); }
+.zona-descenso { background-color: rgba(211, 47, 47, 0.03); }
+
+.tabla-clasificacion tr:hover {
+    background-color: #f5f5f5 !important;
+}
