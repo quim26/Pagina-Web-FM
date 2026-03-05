@@ -1,798 +1,114 @@
-body {
-    margin: 0;
-}
+/* --- VARIABLES Y BASES --- */
+:root { --fuente: 'Red Rose', sans-serif; --verde: #00bb77; --blanco: #fff; --blanco-suave: #f0f0f0; --negro: #000; }
+body { margin: 0; font-family: var(--fuente); }
 
-header, .header, .header ul {
-    display: flex;
-}
+/* --- HEADER Y NAVEGACIÓN --- */
+header, .header, .header ul { display: flex; }
+header { width: 100%; background: linear-gradient(to right, #0a77d6, #f11000); align-items: center; padding: 20px 50px 20px 100px; gap: 30px; box-sizing: border-box; justify-content: space-between; }
+header > div:first-child { border-right: 2px solid rgba(0, 0, 0, 0.4); padding-right: 30px; }
+.logo { width: 120px; height: auto; }
+.header { flex-direction: column; margin-right: auto; }
+h1, .header ul li a { color: var(--blanco); font-family: var(--fuente); margin: 0; }
+h1 { font-size: 50px; }
+header > div:last-child h1 { font-size: 40px; }
+.header ul { list-style: none; padding: 0; margin-top: 10px; gap: 15px; }
+.header ul li a { text-decoration: none; display: inline-block; padding: 5px 12px; border: 2px solid transparent; transition: all 0.3s ease; border-radius: 5px; font-family: var(--fuente); }
+.header ul li a:hover { text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); transform: scale(1.1); border-color: var(--blanco); background: rgba(255, 255, 255, 0.1); }
 
-header {
-    width: 100%;
-    background: linear-gradient(to right, #0a77d6, #f11000);
-    align-items: center;
-    padding: 20px 50px 20px 100px;
-    gap: 30px;
-    box-sizing: border-box;
-    justify-content: space-between;
-}
+/* --- CONTENIDO PRINCIPAL Y TÍTULOS --- */
+main h1, h2, h3, h4 { font-family: var(--fuente); color: var(--negro); }
+main p { font-family: var(--fuente); color: var(--blanco); line-height: 1.5; text-align: justify; }
+h2 { width: 100%; font-size: 35px; text-align: center; margin-bottom: 20px; position: relative; padding-bottom: 15px; text-transform: uppercase; font-family: var(--fuente); }
+h2::after { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background-color: var(--verde); border-radius: 2px; }
 
-header > div:first-child {
-    border-right: 2px solid rgba(0, 0, 0, 0.4);
-    padding-right: 30px;
-}
+/* --- SECCIÓN NOTICIAS --- */
+.noticias { padding: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+.noticias > div { display: flex; flex-direction: column; width: 500px; background: var(--blanco); padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); cursor: pointer; box-sizing: border-box; position: relative; }
+.noticias h3 { margin: 0 0 15px 0; font-size: 22px; background: var(--blanco); font-family: var(--fuente); }
+.noticias .img-wrapper { position: relative; width: 100%; height: 300px; overflow: hidden; border-radius: 5px; }
+.noticias img { width: 100%; height: 100%; object-fit: cover; transition: filter 0.4s ease, transform 0.4s ease; display: block; }
+.noticias p { position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; padding: 20px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: 0; z-index: 2; transition: opacity 0.4s ease; pointer-events: none; font-family: var(--fuente); }
+.noticias > div:hover img { filter: blur(5px) brightness(0.6); transform: scale(1.05); }
+.noticias > div:hover p { opacity: 1; }
 
-.logo {
-    width: 120px;
-    height: auto;
-}
+/* --- SECCIÓN EQUIPOS (TARJETAS) --- */
+.div_equipos { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+.tarjeta-equipo-horizontal { display: flex; align-items: center; width: 380px; background: var(--blanco); padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; border-bottom: 5px solid; }
+.tarjeta-equipo-horizontal:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
+.escudo-contenedor { width: 80px; height: 80px; flex-shrink: 0; }
+.escudo-contenedor img { width: 100%; height: 100%; object-fit: contain; }
+.info-derecha { margin-left: 20px; display: flex; flex-direction: column; justify-content: center; }
+.info-derecha h3 { margin: 0 0 5px 0; font-size: 18px; text-align: left; font-family: var(--fuente); }
+.info-derecha p, .info-derecha p strong { margin: 2px 0; font-size: 14px; text-align: left; color: var(--negro); font-family: var(--fuente); }
 
-.header {
-    flex-direction: column;
-    margin-right: auto;
-}
+/* --- INFO GENERAL Y PALMARES --- */
+.contenedor-palmares, .contenedor-info-general { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding: 40px; background: var(--blanco); border-radius: 15px; margin: 30px auto; width: 95%; max-width: 1200px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); box-sizing: border-box; }
+.item-palmares, .dato-info { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
+.item-palmares img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 12px; }
+.item-palmares h3 { margin: 5px 0; font-size: 0.85rem; text-transform: uppercase; height: 40px; display: flex; align-items: center; justify-content: center; font-family: var(--fuente); }
+.item-palmares .cantidad, .dato-info p { font-size: 1.6rem; font-weight: 800; font-family: var(--fuente); color: var(--negro); margin: 0 auto; width: 100%; text-align: center; }
+.dato-info h3 { margin: 0 0 10px 0; font-size: 0.85rem; text-transform: uppercase; color: #666; font-weight: 600; font-family: var(--fuente); width: 100%; text-align: center; }
 
-h1, .header ul li a {
-    color: #fff;
-    font-family: 'redrose', sans-serif;
-    margin: 0;
-}
-
-h1 {
-    font-size: 50px;
-}
-
-header > div:last-child h1 {
-    font-size: 40px;
-}
-
-.header ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-    gap: 15px;
-}
-
-.header ul li a {
-    text-decoration: none;
-    display: inline-block;
-    padding: 5px 12px;
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-    border-radius: 5px;
-}
-
-.header ul li a:hover {
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    transform: scale(1.1);
-    border-color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-main h1, h2, h3 {
-    font-family: 'redrose', sans-serif;
-    color: #000;
-}
-
-main p {
-    font-family: 'arial', sans-serif;
-    color: #fff;
-    line-height: 1.5;
-    text-align: justify;
-}
-
-h2 {
-    width: 100%;
-    font-size: 35px;
-    text-align: center;
-    margin-bottom: 20px;
-    position: relative;
-    padding-bottom: 15px;
-    text-transform: uppercase;
-}
-
-h2::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background-color: #00bb77;
-    border-radius: 2px;
-}
-
-.noticias {
-    padding: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-}
-
-.noticias > div {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    box-sizing: border-box;
-    position: relative;
-}
-
-.noticias h3 {
-    margin: 0 0 15px 0;
-    font-size: 22px;
-    background: #fff;
-}
-
-.noticias .img-wrapper {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 5px;
-}
-
-.noticias img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: filter 0.4s ease, transform 0.4s ease;
-    display: block;
-}
-
-.noticias p {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    z-index: 2;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
-.noticias > div:hover img {
-    filter: blur(5px) brightness(0.6);
-    transform: scale(1.05);
-}
-
-.noticias > div:hover p {
-    opacity: 1;
-}
-
-.div_equipos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-.tarjeta-equipo-horizontal {
-    display: flex;
-    align-items: center;
-    width: 380px;
-    background: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    border-bottom: 5px solid;
-}
-
-.tarjeta-equipo-horizontal:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-.escudo-contenedor {
-    width: 80px;
-    height: 80px;
-    flex-shrink: 0;
-}
-
-.escudo-contenedor img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.info-derecha {
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.info-derecha h3 {
-    margin: 0 0 5px 0;
-    font-size: 18px;
-    text-align: left;
-}
-
-.info-derecha p {
-    margin: 2px 0;
-    font-size: 14px;
-    text-align: left;
-    color: #000;
-}
-
-.info-derecha p strong {
-    color: #000;
-}
-
-.contenedor-palmares {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 10px;
-    padding: 25px;
-    background: #fff;
-    border-radius: 15px;
-    margin: 20px auto;
-    width: 90%; 
-    max-width: 1000px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.header-plantilla {
-    text-align: center;
-    padding: 20px;
-    background-color: #222; 
-}
-
-.header-plantilla h1 {
-    margin-bottom: 10px;
-    color: #fff;
-}
-
-.header-plantilla a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.2rem;
-    font-family: 'redrose', sans-serif;
-}
-
-.palmares {
-    margin: 20px 0;
-}
-
-.jugadores {
-    padding: 20px;
-}
-
-.div_jugadores {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.contenedor-palmares {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 10px;
-    padding: 25px;
-    background: #fff;
-    border-radius: 15px;
-    margin: 20px auto;
-    width: 90%; 
-    max-width: 1000px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.item-palmares {
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    min-width: 120px; 
-}
-
-.item-palmares img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    margin-bottom: 12px;
-}
-
-.item-palmares h3 {
-    margin: 5px 0;
-    font-size: 1rem;
-    text-transform: uppercase;
-    height: 40px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.item-palmares .cantidad {
-    font-size: 1.8rem;
-    font-weight: 800;
-    font-family: 'redrose', sans-serif;
-}
-
-.contenedor-info-general {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 25px;
-    background: #fff;
-    border-radius: 15px;
-    margin: 20px auto;
-    width: 90%; 
-    max-width: 1000px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.dato-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.dato-info h3 {
-    margin: 0 0 5px 0;
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: #666; /* Color grisáceo para la etiqueta */
-    font-weight: 600;
-}
-
-.dato-info p {
-    margin: 0;
-    font-size: 1.4rem;
-    font-weight: 800;
-    font-family: 'redrose', sans-serif;
-    color: #000;
-}
-
-.seccion-titulo-contenedor {
-    width: 100%;
-    margin: 40px 0 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.seccion-titulo-contenedor h2 {
-    font-size: 2.2rem;
-    margin: 0;
-    text-transform: uppercase;
-}
-
-/* --- ESTILOS DEL CAMPO DE FÚTBOL 5 --- */
-.seccion-tactica {
-    width: 90%;
-    max-width: 1000px;
-    margin: 40px auto;
-    text-align: center;
-    font-family: 'redrose', sans-serif;
-}
-
-.contenedor-canvas-futbol {
-    perspective: 1000px; /* Efecto 3D sutil */
-    margin-top: 20px;
-}
-
-.campo-futbol {
-    width: 100%;
-    aspect-ratio: 16 / 9; /* Proporción del campo */
-    background-color: #2e7d32; /* Verde césped */
-    border: 5px solid #fff;
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    /* Fondo con rayas de césped */
-    background-image: repeating-linear-gradient(
-        90deg,
-        #2e7d32,
-        #2e7d32 50px,
-        #388e3c 50px,
-        #388e3c 100px
-    );
-    transform: rotateX(10deg); /* Inclinación táctica */
-}
-
-/* Líneas del campo */
+/* --- PLANTILLA JUGADORES Y CAMPO TÁCTICO --- */
+.header-plantilla { text-align: center; padding: 20px; background-color: #222; }
+.header-plantilla h1 { margin-bottom: 10px; color: var(--blanco); font-family: var(--fuente); }
+.header-plantilla a { text-decoration: none; color: var(--blanco); font-weight: bold; font-size: 1.2rem; font-family: var(--fuente); }
+.div_jugadores { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.seccion-tactica { width: 90%; max-width: 1000px; margin: 40px auto; text-align: center; font-family: var(--fuente); }
+.contenedor-canvas-futbol { perspective: 1000px; margin-top: 20px; }
+.campo-futbol { width: 100%; aspect-ratio: 16 / 9; background-color: #2e7d32; border: 5px solid var(--blanco); border-radius: 10px; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.3); background-image: repeating-linear-gradient(90deg, #2e7d32, #2e7d32 50px, #388e3c 50px, #388e3c 100px); transform: rotateX(10deg); }
 .linea { position: absolute; background-color: rgba(255,255,255,0.8); }
-
-.linea-central {
-    height: 100%;
-    width: 3px;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.circulo-central {
-    width: 20%;
-    aspect-ratio: 1;
-    border: 3px solid rgba(255,255,255,0.8);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-}
-
-/* Áreas (Simplificadas para F5) */
-.area {
-    border: 3px solid rgba(255,255,255,0.8);
-    position: absolute;
-    height: 60%;
-    width: 15%;
-    top: 20%;
-}
-
-.area.izquierda {
-    left: -2px;
-    border-radius: 0 50% 50% 0;
-    border-left: none;
-}
-
-.area.derecha {
-    right: -2px;
-    border-radius: 50% 0 0 50%;
-    border-right: none;
-}
-
-/* Porterías */
-.porteria {
-    position: absolute;
-    width: 3%;
-    height: 25%;
-    background: rgba(255,255,255,0.2);
-    border: 3px solid #fff;
-    top: 37.5%;
-    z-index: 1;
-}
-
+.linea-central { height: 100%; width: 3px; top: 0; left: 50%; transform: translateX(-50%); }
+.circulo-central { width: 20%; aspect-ratio: 1; border: 3px solid rgba(255,255,255,0.8); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); position: absolute; }
+.area { border: 3px solid rgba(255,255,255,0.8); position: absolute; height: 60%; width: 15%; top: 20%; }
+.area.izquierda { left: -2px; border-radius: 0 50% 50% 0; border-left: none; }
+.area.derecha { right: -2px; border-radius: 50% 0 0 50%; border-right: none; }
+.porteria { position: absolute; width: 3%; height: 25%; background: rgba(255,255,255,0.2); border: 3px solid var(--blanco); top: 37.5%; z-index: 1; }
 .porteria.izquierda { left: -15px; border-radius: 5px 0 0 5px; }
 .porteria.derecha { right: -15px; border-radius: 0 5px 5px 0; }
 
-/* --- ESTILOS DE LAS FICHAS DE JUGADORES (PLAYERS) --- */
-.ficha-jugador {
-    position: absolute;
-    width: 8%; /* Tamaño relativo al campo */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
+/* --- FICHAS DE JUGADORES Y ENTRENADOR --- */
+.ficha-jugador { position: absolute; width: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s ease; cursor: pointer; }
 .ficha-jugador:hover { transform: scale(1.1) translateZ(10px); z-index: 20; }
+.contenedor-foto-ficha { width: 100%; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--blanco); box-shadow: 0 4px 8px rgba(0,0,0,0.5); overflow: hidden; background: #ccc; position: relative; }
+.ficha-jugador.local .contenedor-foto-ficha { border-color: #ffeb3b; }
+.ficha-jugador.visitante .contenedor-foto-ficha { border-color: #2196f3; }
+.dorsal-ficha { position: absolute; bottom: -5px; right: -5px; background: var(--negro); color: var(--blanco); font-size: 0.9rem; font-weight: bold; padding: 2px 6px; border-radius: 50%; border: 2px solid var(--blanco); font-family: var(--fuente); }
+.nombre-ficha { color: var(--blanco); background: rgba(0,0,0,0.7); font-size: 0.75rem; padding: 2px 5px; border-radius: 4px; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120%; font-family: var(--fuente); }
+.zona-banquillo { position: absolute; bottom: 15px; left: 15px; display: flex; align-items: center; gap: 12px; background: rgba(0, 0, 0, 0.75); padding: 10px 15px; border-radius: 10px; color: var(--blanco); z-index: 30; border: 1px solid rgba(255, 255, 255, 0.2); }
+.ficha-entrenador { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--blanco); overflow: hidden; background: #444; flex-shrink: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.4); }
+.info-entrenador h4 { margin: 0; font-size: 1rem; font-family: var(--fuente); color: var(--blanco-suave); }
+.info-entrenador span { font-size: 0.7rem; color: var(--verde); text-transform: uppercase; font-weight: bold; font-family: var(--fuente); }
 
-.contenedor-foto-ficha {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    overflow: hidden;
-    background: #ccc;
-    position: relative;
-}
+/* --- SECCIÓN PARTIDOS --- */
+.proximos-partidos { width: 95%; max-width: 1200px; margin: 10px auto; }
+.titulo-seccion { font-family: var(--fuente); color: var(--negro); margin-bottom: 20px; padding-left: 15px; }
+.contenedor-partidos { display: flex; gap: 20px; overflow-x: auto; padding: 5px 5px; }
+.tarjeta-partido { border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; display: flex; justify-content: space-around; align-items: center; padding: 10px 15px; min-width: 300px; gap: 10px; }
+.equipo-partido img { width: 60px; height: 60px; object-fit: contain; }
+.equipo-partido h2 { color: var(--negro); font-weight: bold; font-size: 2rem; font-family: var(--fuente); }
+.fecha-partido { color: var(--verde); font-size: 0.8rem; font-weight: bold; font-family: var(--fuente); }
+.vs { font-size: 1.5rem; font-family: var(--fuente); color: rgba(0, 0, 0, 0.8); }
+.estadio-partido { color: var(--negro); font-size: 0.7rem; text-align: center; max-width: 100px; font-family: var(--fuente); }
+.contenedor-partidos::-webkit-scrollbar-thumb { background: var(--verde); border-radius: 10px; }
 
-.ficha-jugador.local .contenedor-foto-ficha { border-color: #ffeb3b; /* Amarillo Local */ }
-.ficha-jugador.visitante .contenedor-foto-ficha { border-color: #2196f3; /* Azul Visitante */ }
+/* --- CLASIFICACIÓN --- */
+.seccion-clasificacion { width: 95%; max-width: 1000px; margin: 40px auto; background: var(--blanco); padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.tabla-clasificacion { width: 100%; border-collapse: collapse; color: #333; font-family: var(--fuente); }
+.tabla-clasificacion th, .tabla-clasificacion td { padding: 12px; text-align: center; font-family: var(--fuente); }
+.equipo-tabla p { margin: 0; font-weight: 500; text-align: left; color: var(--negro); font-family: var(--fuente); }
+.pts-col { background-color: #f0fdf4; color: var(--verde); }
+.zona-champions td:first-child { border-left: 5px solid #4285f4; }
+.zona-europa-league td:first-child { border-left: 5px solid #ffa000; }
+.zona-conference td:first-child { border-left: 5px solid #00c853; }
+.zona-descenso td:first-child { border-left: 5px solid #d32f2f; }
 
-.contenedor-foto-ficha img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+/* --- FORMULARIO --- */
+.contenedor-formulario { max-width: 600px; margin: 40px auto; background: var(--blanco); padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: #333; font-family: var(--fuente); }
+.btn-enviar { width: 100%; padding: 15px; background: var(--verde); color: var(--blanco); border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 1rem; font-family: var(--fuente); }
+.btn-enviar:hover { background: var(--verde); filter: brightness(0.9); }
 
-/* Dorsal en la ficha */
-.dorsal-ficha {
-    position: absolute;
-    bottom: -5px;
-    right: -5px;
-    background: #000;
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding: 2px 6px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-}
-
-.nombre-ficha {
-    color: #fff;
-    background: rgba(0,0,0,0.7);
-    font-size: 0.75rem;
-    padding: 2px 5px;
-    border-radius: 4px;
-    margin-top: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120%;
-}
-
-.zona-banquillo {
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-    display: flex;
-    align-items: center;
-    gap: 12px; 
-    background: rgba(0, 0, 0, 0.75);
-    padding: 10px 15px;
-    border-radius: 10px;
-    color: #fff;
-    z-index: 30;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.ficha-entrenador {
-    width: 65px; 
-    height: 65px; 
-    border-radius: 50%;
-    border: 2px solid #fff;
-    overflow: hidden;
-    background: #444;
-    flex-shrink: 0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-}
-
-.ficha-entrenador img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.info-entrenador {
-    text-align: left;
-}
-
-.info-entrenador h4 {
-    margin: 0;
-    font-size: 1rem; 
-    font-family: 'redrose', sans-serif;
-}
-
-.info-entrenador span {
-    font-size: 0.7rem;
-    color: #00bb77;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.proximos-partidos {
-    width: 95%;
-    max-width: 1200px;
-    margin: 10px auto;
-}
-
-.titulo-seccion {
-    font-family: 'redrose', sans-serif;
-    color: #000 ;
-    margin-bottom: 20px;
-    padding-left: 15px;
-}
-
-.contenedor-partidos {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 5px 5px;
-}
-
-.tarjeta-partido {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 15px;
-    min-width: 300px;
-    gap: 10px;
-}
-
-.equipo-partido {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.equipo-partido img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-.equipo-partido h2 {
-    color: #000;
-    font-weight: bold;
-    font-size: 2rem;
-}
-
-.info-partido {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.fecha-partido {
-    color: #00bb77;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.vs {
-    font-size: 1.5rem;
-    font-family: 'redrose', sans-serif;
-    color: rgba(0, 0, 0, 0.8);
-}
-
-.estadio-partido {
-    color: #000;
-    font-size: 0.7rem;
-    text-align: center;
-    max-width: 100px;
-}
-
-.contenedor-partidos::-webkit-scrollbar {
-    height: 6px;
-}
-
-.contenedor-partidos::-webkit-scrollbar-thumb {
-    background: #00bb77;
-    border-radius: 10px;
-}
-
-.contenedor-partidos-anteriores {
-    display: flex;
-    flex-direction: column; 
-    gap: 15px;
-    padding: 20px;
-    align-items: center; 
-}
-
-.tarjeta-partido-anterior {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    width: 100%; 
-    max-width: 600px; 
-    min-height: 120px; 
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.equipo-partido-anterior img {
-    width: 70px; 
-    height: 70px;
-}
-
-.equipo-partido h2 {
-    font-size: 1.5rem; 
-    margin-top: 5px;
-}
-
-.vs-anterior {
-    font-size: 2rem; 
-    font-weight: 900;
-    color: #000;
-    text-align: center;
-}
-
-.fecha-partido-anterior {
-    font-size: 1rem;
-    margin-bottom: 5px;
-}
-
-.seccion-clasificacion {
-    width: 95%;
-    max-width: 1000px;
-    margin: 40px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-.tabla-clasificacion {
-    width: 100%;
-    border-collapse: collapse;
-    color: #333;
-}
-
-.tabla-clasificacion th, 
-.tabla-clasificacion td {
-    padding: 12px;
-    text-align: center;
-    font-family: 'redrose', sans-serif;
-}
-
-.equipo-tabla {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-align: left;
-}
-
-.tabla-clasificacion td.equipo-tabla {
-    text-align: left;
-}
-
-.equipo-tabla p {
-    margin: 0;
-    font-weight: 500;
-    text-align: left;
-    color: #000;
-}
-
-.tabla-clasificacion th:nth-child(2) {
-    text-align: left;
-    padding-left: 55px;
-}
-
-.equipo-tabla img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-}
-
-.pts-col {
-    background-color: #f0fdf4;
-    color: #00a86b;
-}
-
-.tabla-clasificacion tr:hover {
-    background-color: #fcfcfc;
-}
-
-/* Colores de las zonas */
-.zona-champions td:first-child {
-    border-left: 5px solid #4285f4; /* Azul Champions */
-}
-
-.zona-europa-league td:first-child {
-    border-left: 5px solid #ffa000; /* Naranja Europa League */
-}
-
-.zona-conference td:first-child {
-    border-left: 5px solid #00c853; /* Verde Conference */
-}
-
-.zona-descenso td:first-child {
-    border-left: 5px solid #d32f2f; /* Rojo Descenso */
-}
-
-/* Opcional: Fondos muy sutiles para las filas */
-.zona-champions { background-color: rgba(66, 133, 244, 0.03); }
-.zona-europa-league { background-color: rgba(255, 160, 0, 0.03); }
-.zona-conference { background-color: rgba(0, 200, 83, 0.015); }
-.zona-descenso { background-color: rgba(211, 47, 47, 0.03); }
-
-.tabla-clasificacion tr:hover {
-    background-color: #f5f5f5 !important;
-}
+/* --- FOOTER --- */
+.footer-ligas { background-color: #f8f9fa; border-top: 1px solid #eee; padding: 30px 20px; margin-top: 50px; font-family: var(--fuente); }
+.footer-programadores strong { color: var(--verde); }
+.footer-links a:hover { color: var(--verde); }
