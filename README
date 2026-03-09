@@ -1,1 +1,57 @@
-README Gerente De Futebol
+🏆 La Liga Manager 2026
+
+Una aplicación web interactiva diseñada para la gestión y visualización de datos de La Liga. El proyecto permite consultar noticias actuales, 
+visualizar próximos encuentros, explorar las plantillas de los equipos con una alineación táctica de Fútbol 5 y consultar la clasificación en tiempo real.
+
+
+🚀 Características Principales
+
+Panel de Noticias: Sección dinámica con efectos visuales (hover) para las últimas novedades del fútbol español.
+Próximos Encuentros: Visualización de los partidos más cercanos mediante un carrusel interactivo cargado dinámicamente.
+Sistema de Plantillas: Visualización detallada de jugadores, palmarés histórico del club e información del estadio.
+Pizarra Táctica: Generación automática de una alineación ideal de Fútbol 5 basada en la calidad de los jugadores del JSON.
+Clasificación Dinámica: Tabla de posiciones con distinción visual para zonas de Champions League, Europa League y Descenso.
+Formulario de Registro: Sistema para dar de alta nuevos jugadores o entrenadores asociados a clubes específicos.
+
+🛠️ Tecnologías Utilizadas
+
+HTML5: Estructura semántica avanzada.
+CSS3: Diseño personalizado utilizando variables modernas, Flexbox y transformaciones 3D para el campo de juego.
+JavaScript (ES6+): Lógica unificada en un solo archivo (main.js) para manejar todas las páginas de forma eficiente.
+JSON: Almacenamiento de datos para jugadores, equipos y resultados de partidos.
+
+
+📂 Estructura del Proyecto
+Plaintext
+/
+├── Index.html            # Página principal (Noticias y Próximos Partidos)
+├── clasificacion.html    # Tabla de posiciones de la liga
+├── resultados.html       # Histórico de partidos recientes
+├── plantilla.html        # Detalle de equipo y alineación táctica
+├── formulario.html       # Registro de nuevos miembros
+├── css/
+│   └── styles.css        # Estilos globales y variables de color
+├── js/
+│   └── main.js          # Lógica unificada del proyecto
+├── json/
+│   ├── jugadores.json    # Base de datos de equipos y futbolistas
+│   └── partidos.json     # Datos de encuentros y resultados
+└── img/                  # Recursos gráficos (Logos, Escudos, Fotos)
+
+
+🎨 Identidad Visual
+
+El proyecto utiliza una paleta de colores inspirada en la competición:
+Azul: #0a77d6 (Zonas de élite y branding)
+Rojo: #f11000 (Zonas de peligro y acentos)
+Verde: #00bb77 (Identidad de campo y acentos positivos)
+Tipografía: Red Rose para un aspecto moderno y deportivo.
+
+
+✒️ Autores
+
+Quim Fernández - Desarrollador
+Sergi Grau - Desarrollador
+
+
+© 2026 La Liga Manager - Todos los derechos reservados.
