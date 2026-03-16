@@ -273,12 +273,37 @@ function moveSlider() {
 // Tablas de estadísticas
 
 function generarTablasEstadisticas() {
-    renderizarTabla("tabla-goleadores", "Máximos Goleadores", goleadores, "Goles");
-    renderizarTabla("tabla-asistentes", "Máximos Asistentes", asistentes, "Asist.");
-    renderizarTabla("tabla-zamora", "Porterías Imbatidas", zamora, "Partidos");
+    console.log("Generando tablas...");
+    
+    const mapeo = {
+        "FC Barcelona": "barcelona",
+        "Real Madrid": "real-madrid",
+        "Atlético de Madrid": "atletico-madrid",
+        "Villarreal CF": "villarreal",
+        "Athletic Club": "athletic",
+        "Real Sociedad": "real-sociedad",
+        "Girona FC": "girona",
+        "RCD Mallorca": "mallorca",
+        "Real Betis": "betis",
+        "CA Osasuna": "osasuna",
+        "Rayo Vallecano": "rayo",
+        "Sevilla FC": "sevilla",
+        "Celta de Vigo": "celta",
+        "Deportivo Alavés": "alaves",
+        "CD Leganés": "leganes",
+        "Getafe CF": "getafe",
+        "UD Las Palmas": "las-palmas",
+        "Valencia CF": "valencia",
+        "Real Valladolid": "valladolid",
+        "RCD Espanyol": "espanyol"
+    };
+
+    renderizarTabla("tabla-goleadores", "Máximos Goleadores", goleadores, "Goles", mapeo);
+    renderizarTabla("tabla-asistentes", "Máximos Asistentes", asistentes, "Asist.", mapeo);
+    renderizarTabla("tabla-zamora", "Porterías Imbatidas", zamora, "Partidos", mapeo);
 }
 
-function renderizarTabla(idContenedor, titulo, datos, etiquetaValor) {
+function renderizarTabla(idContenedor, titulo, datos, etiquetaValor, mapeo) {
     const container = document.getElementById(idContenedor);
     if (!container) return;
 
@@ -287,23 +312,27 @@ function renderizarTabla(idContenedor, titulo, datos, etiquetaValor) {
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Jugador</th>
-                    <th>${etiquetaValor}</th>
+                    <th style="text-align: center;">#</th>
+                    <th style="text-align: center;">Jugador</th>
+                    <th style="text-align: center;">Escudo</th>
+                    <th style="text-align: center;">${etiquetaValor}</th>
                 </tr>
             </thead>
             <tbody>
     `;
 
     datos.forEach((jugador, index) => {
+        const archivo = mapeo[jugador.equipo] || "default";
+        const rutaEscudo = `img/escudos/${archivo}.png`;
+
         html += `
             <tr>
-                <td>${index + 1}</td>
-                <td>
-                    <span class="jugador-nombre">${jugador.nombre}</span>
-                    <br><small class="equipo-subtexto">${jugador.equipo}</small>
+                <td style="text-align: center;">${index + 1}</td>
+                <td style="text-align: center;"><span class="jugador-nombre">${jugador.nombre}</span></td>
+                <td style="display: flex; justify-content: center; align-items: center; border-bottom: none;">
+                    <img src="${rutaEscudo}" class="tabla-escudo-img" alt="${jugador.equipo}">
                 </td>
-                <td class="valor-stat">${jugador.cantidad}</td>
+                <td style="text-align: center;" class="valor-stat">${jugador.cantidad}</td>
             </tr>
         `;
     });
@@ -315,5 +344,4 @@ function renderizarTabla(idContenedor, titulo, datos, etiquetaValor) {
 document.addEventListener("DOMContentLoaded", function() {
     generarSlidersFondoEscudos(proximaJornada);
     generarTablasEstadisticas();
-    // ... resto de tu código de movimiento ...
 });

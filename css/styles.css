@@ -18,7 +18,7 @@ body {
    background-color: var(--fondo);
 }
 
-body h1, h2, h3 {
+body h1, h2, h3, span, th, td {
    font-family: var(--fuente-titulo);
    color: var(--color-titulo);
 }
@@ -233,56 +233,57 @@ body a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    padding: 20px;
-    color: #ffffff;
-    font-family: sans-serif;
+    gap: 40px;
+    padding: 40px 20px;
+    color: white;
 }
 
 .tabla-stats {
     flex: 1;
-    min-width: 280px;
-    max-width: 400px;
+    min-width: 300px;
+    max-width: 350px;
 }
 
 .tabla-stats h3 {
     text-align: center;
-    color: #ffffff;
-    font-size: 1.4rem;
     margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 10px;
 }
 
 .tabla-stats table {
     width: 100%;
     border-collapse: collapse;
-    color: #ffffff;
 }
 
-.tabla-stats th {
-    text-align: left;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: uppercase;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+.tabla-stats th, .tabla-stats td {
+    padding: 12px 5px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
 }
 
-.tabla-stats td {
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    vertical-align: middle;
+.tabla-escudo-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.valor-stat {
+    font-weight: bold;
 }
 
 .jugador-nombre {
-    font-weight: bold;
-    font-size: 1rem;
+    display: block;
+    text-align: center;
 }
 
-.equipo-subtexto {
-    opacity: 0.7;
-    font-size: 0.8rem;
+.tabla-escudo-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
 }
 
 .valor-stat {
