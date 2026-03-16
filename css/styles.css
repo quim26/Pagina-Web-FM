@@ -23,10 +23,25 @@ body h1, h2, h3 {
    color: var(--color-titulo);
 }
 
-body p, a {
+body h1 {
+   text-align: center;
+   margin-bottom: 20px;
+   font-size: 2.5rem;
+}
+
+body p {
    font-family: var(--fuente-texto);
    color: var(--color-texto);
+}
+
+body a {
+   font-family: var(--fuente-titulo);
+   color: var(--color-titulo);
    text-decoration: none;
+}
+
+body a:hover {
+   color: var(--verde);
 }
 
 /* =========================================
@@ -50,13 +65,13 @@ body p, a {
 }
 
 .header .header-identity h1 {
-   font-size: 1.5em;
+   font-size: 1.9em;
    margin: .6em 0;
    display: inline-block;
 }
 
 .header .header-identity img {
-   max-width: 55px; 
+   max-width: 70px; 
    float: left;
    margin-right: 5px;
 }
@@ -73,4 +88,209 @@ body p, a {
 .header .header-navigation li {
    display: inline-block;
    margin: 1.4em 1em 1em 1em;
+}
+
+.footer {
+   border-top: 3px solid;
+   border-image: linear-gradient(to right, var(--azul), var(--rojo)) 1;
+   padding: 0.5em 1em;
+}
+
+.footer .links {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 15px;
+   margin-top: 20px;
+}
+
+.footer .pages {
+   display: flex;
+   gap: 20px;
+   border-bottom: 4px solid var(--verde);
+   padding-bottom: 15px;
+}
+
+.footer .social-media {
+   display: flex;
+   gap: 15px;
+   align-items: center;
+}
+
+.footer .social-media a img {
+   width: 35px;
+   height: 35px;
+   object-fit: contain;
+}
+
+/* =========================================
+   3. Inicio
+   ========================================= */
+
+/* Slider de partidos próximos */
+
+.slider-title {
+   text-align: center;
+   margin-bottom: 20px;
+   font-size: 2.5rem;
+}
+
+.slider-container {
+   width: 85%;
+   max-width: 900px;
+   height: 400px;
+   margin: 30px auto;
+   overflow: hidden;
+   position: relative;
+   border-radius: 20px;
+   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+   background-color: #000;
+}
+
+.slider-track {
+   display: flex;
+   width: 100%;
+   height: 100%;
+   margin-left: 0;
+}
+
+.slider-item {
+   min-width: 100%;
+   height: 100%;
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+.capa-oscura {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+   z-index: 1;
+}
+
+.contenido-texto {
+   position: relative;
+   z-index: 2;
+   text-align: center;
+   color: white;
+   font-family: 'Arial Black', Gadget, sans-serif;
+}
+
+.equipo-nombre {
+   font-size: 2.2rem;
+   font-weight: 900;
+   text-transform: uppercase;
+   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.vs {
+   font-size: 1.2rem;
+   margin: 0 15px;
+   font-style: italic;
+   opacity: 0.9;
+}
+
+.fila-detalles {
+   margin-top: 15px;
+   font-family: Arial, sans-serif;
+   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.fecha-hora {
+   font-weight: bold;
+   font-size: 1.1rem;
+}
+
+.estadio {
+   font-size: 0.9rem;
+   opacity: 0.9;
+   margin-top: 5px;
+}
+
+.badge-tv {
+   display: inline-block;
+   background: rgba(255, 255, 255, 0.15);
+   backdrop-filter: blur(5px);
+   border: 1px solid rgba(255, 255, 255, 0.3);
+   padding: 6px 15px;
+   border-radius: 20px;
+   margin-top: 15px;
+   font-size: 0.8rem;
+   font-weight: bold;
+}
+
+/* Estadisticas de la temporada */
+
+.contenedor-estadisticas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    color: #ffffff;
+    font-family: sans-serif;
+}
+
+.tabla-stats {
+    flex: 1;
+    min-width: 280px;
+    max-width: 400px;
+}
+
+.tabla-stats h3 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tabla-stats table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+}
+
+.tabla-stats th {
+    text-align: left;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tabla-stats td {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    vertical-align: middle;
+}
+
+.jugador-nombre {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.equipo-subtexto {
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
+
+.valor-stat {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.tabla-stats tr:last-child td {
+    border-bottom: none;
 }
