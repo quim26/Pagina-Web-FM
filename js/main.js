@@ -1,32 +1,37 @@
-// Cargar header y footer
+// 1. CARGA DE COMPONENTES (HEADER/FOOTER)
+fetch('header.html').then(res => res.text()).then(data => { 
+    const h = document.getElementById('header'); 
+    if (h) h.innerHTML = data; 
+}).catch(e => console.error('Error header:', e));
 
-fetch('header.html').then(res => res.text()).then(data => { const h = document.getElementById('header'); if (h) h.innerHTML = data; }).catch(e => console.error('Error header:', e));
-fetch('footer.html').then(res => res.text()).then(data => { const f = document.getElementById('footer'); if (f) f.innerHTML = data; }).catch(e => console.error('Error footer:', e));
+fetch('footer.html').then(res => res.text()).then(data => { 
+    const f = document.getElementById('footer'); 
+    if (f) f.innerHTML = data; 
+}).catch(e => console.error('Error footer:', e));
 
-// -- Cosas guardadas --
-
-const INFO_ADICIONAL = {
-    "FC Barcelona": { estadio: "Spotify Camp Nou", fundado: "1899", siglas: "BAR" },
-    "Real Madrid CF": { estadio: "Santiago Bernabéu", fundado: "1902", siglas: "RMA" },
-    "Atlético de Madrid": { estadio: "Cívitas Metropolitano", fundado: "1903", siglas: "ATM" },
-    "Villarreal CF": { estadio: "Estadio de la Cerámica", fundado: "1923", siglas: "VIL" },
-    "Sevilla FC": { estadio: "Ramón Sánchez-Pizjuán", fundado: "1890", siglas: "SEV" },
-    "Real Sociedad": { estadio: "Reale Arena", fundado: "1909", siglas: "RSO" },
-    "Athletic Club": { estadio: "San Mamés", fundado: "1898", siglas: "ATH" },
-    "Real Betis": { estadio: "Benito Villamarín", fundado: "1907", siglas: "BET" },
-    "Valencia CF": { estadio: "Mestalla", fundado: "1919", siglas: "VCF" },
-    "CA Osasuna": { estadio: "El Sadar", fundado: "1920", siglas: "OSA" },
-    "Girona FC": { estadio: "Montilivi", fundado: "1930", siglas: "GIR" },
-    "Rayo Vallecano": { estadio: "Estadio de Vallecas", fundado: "1924", siglas: "RAY" },
-    "RC Celta de Vigo": { estadio: "Abanca-Balaídos", fundado: "1923", siglas: "CEL" },
-    "RCD Mallorca": { estadio: "Visit Mallorca Estadi", fundado: "1916", siglas: "MLL" },
-    "Deportivo Alavés": { estadio: "Mendizorroza", fundado: "1921", siglas: "ALA" },
-    "UD Las Palmas": { estadio: "Estadio de Gran Canaria", fundado: "1949", siglas: "LPA" },
-    "Getafe CF": { estadio: "Coliseum", fundado: "1983", siglas: "GET" },
-    "CD Leganés": { estadio: "Estadio Municipal de Butarque", fundado: "1928", siglas: "LEG" },
-    "RCD Espanyol": { estadio: "RCDE Stadium", fundado: "1900", siglas: "ESP" },
-    "Real Valladolid CF": { estadio: "Estadio José Zorrilla", fundado: "1928", siglas: "VLD" }
-};
+// 2. CONSTANTES DE DATOS
+const dadesEquips = [
+    { "equip": "FC Barcelona", "escut": "img/escudos/barcelona.png" },
+    { "equip": "Real Madrid", "escut": "img/escudos/real-madrid.png" },
+    { "equip": "Atlético de Madrid", "escut": "img/escudos/atletico-madrid.png" },
+    { "equip": "Sevilla FC", "escut": "img/escudos/sevilla.png" },
+    { "equip": "Real Sociedad", "escut": "img/escudos/real-sociedad.png" },
+    { "equip": "Real Betis", "escut": "img/escudos/betis.png" },
+    { "equip": "Athletic Club", "escut": "img/escudos/athletic.png" },
+    { "equip": "Villarreal CF", "escut": "img/escudos/villarreal.png" },
+    { "equip": "Valencia CF", "escut": "img/escudos/valencia.png" },
+    { "equip": "Celta de Vigo", "escut": "img/escudos/celta.png" },
+    { "equip": "RCD Mallorca", "escut": "img/escudos/mallorca.png" },
+    { "equip": "Girona FC", "escut": "img/escudos/girona.png" },
+    { "equip": "CA Osasuna", "escut": "img/escudos/osasuna.png" },
+    { "equip": "Getafe CF", "escut": "img/escudos/getafe.png" },
+    { "equip": "UD Las Palmas", "escut": "img/escudos/las-palmas.png" },
+    { "equip": "RCD Espanyol", "escut": "img/escudos/espanyol.png" },
+    { "equip": "CD Leganés", "escut": "img/escudos/leganes.png" },
+    { "equip": "Real Valladolid", "escut": "img/escudos/valladolid.png" },
+    { "equip": "Rayo Vallecano", "escut": "img/escudos/rayo.png" },
+    { "equip": "Deportivo Alavés", "escut": "img/escudos/alaves.png" }
+];
 
 const coloresEquipos = {
     "FC Barcelona": { principal: "#004170", secundario: "#AA0637" },
@@ -51,110 +56,12 @@ const coloresEquipos = {
     "RCD Espanyol": { principal: "#007CC3", secundario: "#FFFFFF" }
 };
 
-const clasificacionLiga = [
-    { pos: 1, equipo: "FC Barcelona", pj: 19, g: 15, e: 1, p: 3, gf: 50, gc: 18, pts: 46 },
-    { pos: 2, equipo: "Real Madrid", pj: 19, g: 13, e: 4, p: 2, gf: 38, gc: 15, pts: 43 },
-    { pos: 3, equipo: "Atlético de Madrid", pj: 19, g: 12, e: 5, p: 2, gf: 31, gc: 14, pts: 41 },
-    { pos: 4, equipo: "Villarreal CF", pj: 19, g: 11, e: 4, p: 4, gf: 33, gc: 25, pts: 37 },
-    { pos: 5, equipo: "Athletic Club", pj: 19, g: 9, e: 6, p: 4, gf: 29, gc: 20, pts: 33 },
-    { pos: 6, equipo: "Real Sociedad", pj: 19, g: 8, e: 5, p: 6, gf: 22, gc: 19, pts: 29 },
-    { pos: 7, equipo: "Girona FC", pj: 19, g: 8, e: 4, p: 7, gf: 28, gc: 24, pts: 28 },
-    { pos: 8, equipo: "RCD Mallorca", pj: 19, g: 8, e: 3, p: 8, gf: 19, gc: 18, pts: 27 },
-    { pos: 9, equipo: "Real Betis", pj: 19, g: 7, e: 6, p: 6, gf: 21, gc: 22, pts: 27 },
-    { pos: 10, equipo: "CA Osasuna", pj: 19, g: 7, e: 5, p: 7, gf: 23, gc: 27, pts: 26 },
-    { pos: 11, equipo: "Rayo Vallecano", pj: 19, g: 6, e: 6, p: 7, gf: 20, gc: 21, pts: 24 },
-    { pos: 12, equipo: "Sevilla FC", pj: 19, g: 6, e: 5, p: 8, gf: 22, gc: 26, pts: 23 },
-    { pos: 13, equipo: "Celta de Vigo", pj: 19, g: 6, e: 4, p: 9, gf: 27, gc: 32, pts: 22 },
-    { pos: 14, equipo: "Deportivo Alavés", pj: 19, g: 6, e: 3, p: 10, gf: 21, gc: 30, pts: 21 },
-    { pos: 15, equipo: "CD Leganés", pj: 19, g: 5, e: 5, p: 9, gf: 16, gc: 24, pts: 20 },
-    { pos: 16, equipo: "Getafe CF", pj: 19, g: 3, e: 9, p: 7, gf: 12, gc: 18, pts: 18 },
-    { pos: 17, equipo: "UD Las Palmas", pj: 19, g: 4, e: 5, p: 10, gf: 19, gc: 31, pts: 17 },
-    { pos: 18, equipo: "Valencia CF", pj: 19, g: 3, e: 6, p: 10, gf: 15, gc: 29, pts: 15 },
-    { pos: 19, equipo: "Real Valladolid", pj: 19, g: 3, e: 5, p: 11, gf: 14, gc: 35, pts: 14 },
-    { pos: 20, equipo: "RCD Espanyol", pj: 19, g: 3, e: 4, p: 12, gf: 18, gc: 36, pts: 13 }
-];
-
 const proximaJornada = [
-    {
-        local: "Real Madrid",
-        visitante: "RCD Mallorca",
-        fecha: "2026-03-20",
-        hora: "21:00",
-        estadio: "Santiago Bernabéu",
-        tv: "DAZN"
-    },
-    {
-        local: "FC Barcelona",
-        visitante: "Getafe CF",
-        fecha: "2026-03-21",
-        hora: "16:15",
-        estadio: "Spotify Camp Nou",
-        tv: "Movistar+ LaLiga"
-    },
-    {
-        local: "Villarreal CF",
-        visitante: "Valencia CF",
-        fecha: "2026-03-21",
-        hora: "18:30",
-        estadio: "Estadio de la Cerámica",
-        tv: "DAZN"
-    },
-    {
-        local: "Atlético de Madrid",
-        visitante: "Sevilla FC",
-        fecha: "2026-03-21",
-        hora: "21:00",
-        estadio: "Cívitas Metropolitano",
-        tv: "Movistar+ LaLiga"
-    },
-    {
-        local: "Real Sociedad",
-        visitante: "Athletic Club",
-        fecha: "2026-03-22",
-        hora: "14:00",
-        estadio: "Reale Arena",
-        tv: "DAZN"
-    },
-    {
-        local: "Girona FC",
-        visitante: "Real Valladolid",
-        fecha: "2026-03-22",
-        hora: "16:15",
-        estadio: "Montilivi",
-        tv: "Movistar+ LaLiga"
-    },
-    {
-        local: "Real Betis",
-        visitante: "Celta de Vigo",
-        fecha: "2026-03-22",
-        hora: "18:30",
-        estadio: "Benito Villamarín",
-        tv: "DAZN"
-    },
-    {
-        local: "CA Osasuna",
-        visitante: "Rayo Vallecano",
-        fecha: "2026-03-22",
-        hora: "21:00",
-        estadio: "El Sadar",
-        tv: "Movistar+ LaLiga"
-    },
-    {
-        local: "UD Las Palmas",
-        visitante: "CD Leganés",
-        fecha: "2026-03-23",
-        hora: "21:00",
-        estadio: "Gran Canaria",
-        tv: "GOL Play"
-    },
-    {
-        local: "RCD Espanyol",
-        visitante: "Deportivo Alavés",
-        fecha: "2026-03-23",
-        hora: "21:00",
-        estadio: "Stage Front Stadium",
-        tv: "DAZN"
-    }
+    { local: "Real Madrid", visitante: "RCD Mallorca", fecha: "2026-03-20", hora: "21:00", estadio: "Santiago Bernabéu", tv: "DAZN" },
+    { local: "FC Barcelona", visitante: "Getafe CF", fecha: "2026-03-21", hora: "16:15", estadio: "Spotify Camp Nou", tv: "Movistar+ LaLiga" },
+    { local: "Villarreal CF", visitante: "Valencia CF", fecha: "2026-03-21", hora: "18:30", estadio: "Estadio de la Cerámica", tv: "DAZN" },
+    { local: "Atlético de Madrid", visitante: "Sevilla FC", fecha: "2026-03-21", hora: "21:00", estadio: "Cívitas Metropolitano", tv: "Movistar+ LaLiga" },
+    { local: "Real Sociedad", visitante: "Athletic Club", fecha: "2026-03-22", hora: "14:00", estadio: "Reale Arena", tv: "DAZN" }
 ];
 
 const goleadores = [
@@ -181,9 +88,7 @@ const zamora = [
     { nombre: "Dominik Greif", equipo: "RCD Mallorca", cantidad: 6 }
 ];
 
-// -- Inicio -- 
-
-// Sliders de fondo con escudos y detalles de partidos próximos
+// 3. FUNCIONES DE RENDERIZADO
 
 function generarSlidersFondoEscudos(partidos) {
     const container = document.getElementById('contenedor-sliders');
@@ -192,13 +97,11 @@ function generarSlidersFondoEscudos(partidos) {
     partidos.forEach(partido => {
         const colorLocal = coloresEquipos[partido.local]?.principal || "#fff";
         const colorVisitante = coloresEquipos[partido.visitante]?.principal || "#fff";
-        
         const nombreEstadioArchivo = partido.estadio.replace(/ /g, "_").toLowerCase();
         const estadioUrl = `img/estadios/${nombreEstadioArchivo}.jpg`;
 
         const slider = document.createElement('div');
         slider.className = 'slider-item';
-        
         slider.style.backgroundImage = `url('${estadioUrl}')`;
 
         slider.innerHTML = `
@@ -220,44 +123,64 @@ function generarSlidersFondoEscudos(partidos) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    generarSlidersFondoEscudos(proximaJornada);
+function generarTablasEstadisticas() {
+    const mapeo = {
+        "FC Barcelona": "barcelona", "Real Madrid": "real-madrid", "Atlético de Madrid": "atletico-madrid",
+        "Villarreal CF": "villarreal", "Athletic Club": "athletic", "Real Sociedad": "real-sociedad",
+        "Girona FC": "girona", "RCD Mallorca": "mallorca", "Real Betis": "betis", "CA Osasuna": "osasuna",
+        "Rayo Vallecano": "rayo", "Sevilla FC": "sevilla", "Celta de Vigo": "celta",
+        "Deportivo Alavés": "alaves", "CD Leganés": "leganes", "Getafe CF": "getafe",
+        "UD Las Palmas": "las-palmas", "Valencia CF": "valencia", "Real Valladolid": "valladolid", "RCD Espanyol": "espanyol"
+    };
 
-    const track = document.getElementById('contenedor-sliders');
-    const container = document.querySelector('.slider-container');
-    const intervalTime = 3000;
-    let sliderInterval;
+    renderizarTabla("tabla-goleadores", "Máximos Goleadores", goleadores, "Goles", mapeo);
+    renderizarTabla("tabla-asistentes", "Máximos Asistentes", asistentes, "Asist.", mapeo);
+    renderizarTabla("tabla-zamora", "Porterías Imbatidas", zamora, "Partidos", mapeo);
+}
 
-    function moveSlider() {
-        const firstItem = track.querySelector('.slider-item');
-        if (!firstItem) return;
+function renderizarTabla(idContenedor, titulo, datos, etiquetaValor, mapeo) {
+    const container = document.getElementById(idContenedor);
+    if (!container) return;
 
-        track.style.transition = "margin-left 0.8s ease-in-out";
-        track.style.marginLeft = "-100%";
+    let html = `<h3>${titulo}</h3><table><thead><tr>
+        <th>#</th><th>Jugador</th><th>Escudo</th><th>${etiquetaValor}</th>
+    </tr></thead><tbody>`;
 
-        setTimeout(() => {
-            track.style.transition = "none";
-            track.appendChild(firstItem);
-            track.style.marginLeft = "0";
-        }, 800);
-    }
+    datos.forEach((jugador, index) => {
+        const archivo = mapeo[jugador.equipo] || "default";
+        html += `<tr>
+            <td>${index + 1}</td>
+            <td>${jugador.nombre}</td>
+            <td><img src="img/escudos/${archivo}.png" class="tabla-escudo-img" alt="${jugador.equipo}"></td>
+            <td class="valor-stat">${jugador.cantidad}</td>
+        </tr>`;
+    });
+    container.innerHTML = html + `</tbody></table>`;
+}
 
-    function startInterval() {
-        sliderInterval = setInterval(moveSlider, intervalTime);
-    }
+function dibujarTarjetasEquipos() {
+    const contenedor = document.getElementById('escudo');
+    if (!contenedor) return;
 
-    startInterval();
+    contenedor.innerHTML = '';
+    dadesEquips.forEach(equipo => {
+        const colores = coloresEquipos[equipo.equip] || { principal: '#333', secundario: '#111' };
+        const tarjeta = document.createElement('div');
+        tarjeta.className = 'tarjeta-individual';
+        tarjeta.style.background = `linear-gradient(135deg, ${colores.principal}, ${colores.secundario})`;
+        tarjeta.innerHTML = `
+            <img src="${equipo.escut}" alt="${equipo.equip}">
+            <h3>${equipo.equip}</h3>
+        `;
+        contenedor.appendChild(tarjeta);
+    });
+}
 
-    if (container) {
-        container.addEventListener('mouseenter', () => clearInterval(sliderInterval));
-        container.addEventListener('mouseleave', startInterval);
-    }
-});
-
+// 4. LÓGICA DEL SLIDER AUTOMÁTICO
 function moveSlider() {
     const track = document.getElementById('contenedor-sliders');
+    if (!track) return;
     const firstItem = track.querySelector('.slider-item');
-    
     if (!firstItem) return;
 
     track.style.transition = "margin-left 0.8s ease-in-out";
@@ -270,155 +193,19 @@ function moveSlider() {
     }, 800);
 }
 
-// Tablas de estadísticas
-
-function generarTablasEstadisticas() {
-    console.log("Generando tablas...");
-    
-    const mapeo = {
-        "FC Barcelona": "barcelona",
-        "Real Madrid": "real-madrid",
-        "Atlético de Madrid": "atletico-madrid",
-        "Villarreal CF": "villarreal",
-        "Athletic Club": "athletic",
-        "Real Sociedad": "real-sociedad",
-        "Girona FC": "girona",
-        "RCD Mallorca": "mallorca",
-        "Real Betis": "betis",
-        "CA Osasuna": "osasuna",
-        "Rayo Vallecano": "rayo",
-        "Sevilla FC": "sevilla",
-        "Celta de Vigo": "celta",
-        "Deportivo Alavés": "alaves",
-        "CD Leganés": "leganes",
-        "Getafe CF": "getafe",
-        "UD Las Palmas": "las-palmas",
-        "Valencia CF": "valencia",
-        "Real Valladolid": "valladolid",
-        "RCD Espanyol": "espanyol"
-    };
-
-    renderizarTabla("tabla-goleadores", "Máximos Goleadores", goleadores, "Goles", mapeo);
-    renderizarTabla("tabla-asistentes", "Máximos Asistentes", asistentes, "Asist.", mapeo);
-    renderizarTabla("tabla-zamora", "Porterías Imbatidas", zamora, "Partidos", mapeo);
-}
-
-function renderizarTabla(idContenedor, titulo, datos, etiquetaValor, mapeo) {
-    const container = document.getElementById(idContenedor);
-    if (!container) return;
-
-    let html = `
-        <h3>${titulo}</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th style="text-align: center;">#</th>
-                    <th style="text-align: center;">Jugador</th>
-                    <th style="text-align: center;">Escudo</th>
-                    <th style="text-align: center;">${etiquetaValor}</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    datos.forEach((jugador, index) => {
-        const archivo = mapeo[jugador.equipo] || "default";
-        const rutaEscudo = `img/escudos/${archivo}.png`;
-
-        html += `
-            <tr>
-                <td style="text-align: center;">${index + 1}</td>
-                <td style="text-align: center;"><span class="jugador-nombre">${jugador.nombre}</span></td>
-                <td style="display: flex; justify-content: center; align-items: center; border-bottom: none;">
-                    <img src="${rutaEscudo}" class="tabla-escudo-img" alt="${jugador.equipo}">
-                </td>
-                <td style="text-align: center;" class="valor-stat">${jugador.cantidad}</td>
-            </tr>
-        `;
-    });
-
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
+// 5. INICIALIZACIÓN ÚNICA
 document.addEventListener("DOMContentLoaded", function() {
+    // Renderizar todo
     generarSlidersFondoEscudos(proximaJornada);
     generarTablasEstadisticas();
+    dibujarTarjetasEquipos();
+
+    // Iniciar Intervalo Slider
+    let sliderInterval = setInterval(moveSlider, 3000);
+
+    const sliderContainer = document.querySelector('.slider-container');
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', () => clearInterval(sliderInterval));
+        sliderContainer.addEventListener('mouseleave', () => sliderInterval = setInterval(moveSlider, 3000));
+    }
 });
-
-const dadesEquips = [ /* EL TEU JSON AQUÍ */ ];
-
-function generarSeccioEquips() {
-    const grid = document.getElementById('grid-equips');
-    
-    dadesEquips.forEach(equip => {
-        const colors = coloresEquipos[equip.equip] || { principal: '#333', secundario: '#000' };
-        
-        const card = document.createElement('div');
-        card.className = 'equip-card';
-        card.style.background = `linear-gradient(135deg, ${colors.principal}, ${colors.secundario})`;
-        
-        card.innerHTML = `
-            <img src="${equip.escut}" alt="${equip.equip}">
-            <h3>${equip.equip}</h3>
-        `;
-        
-        card.onclick = () => mostrarDetalls(equip);
-        grid.appendChild(card);
-    });
-}
-
-function mostrarDetalls(equip) {
-    const overlay = document.getElementById('detall-equip');
-    const infoEntrenador = document.getElementById('info-entrenador');
-    const taulaJugadors = document.getElementById('taula-jugadors');
-    
-    infoEntrenador.innerHTML = `
-        <div class="entrenador-flex">
-            <img src="${equip.entrenador.foto}" alt="${equip.entrenador.nomPersona}">
-            <div>
-                <h2>${equip.entrenador.nomPersona}</h2>
-                <p>Entrenador del ${equip.equip}</p>
-            </div>
-        </div>
-    `;
-    
-    let taulaHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Foto</th>
-                    <th>#</th>
-                    <th>Nom</th>
-                    <th>Posició</th>
-                    <th>Qualitat</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-    
-    equip.jugadors.forEach(j => {
-        taulaHTML += `
-            <tr>
-                <td><img src="${j.foto}" class="foto-jugador"></td>
-                <td>${j.dorsal}</td>
-                <td>${j.nomPersona}</td>
-                <td>${j.posicio}</td>
-                <td>${j.qualitat}</td>
-            </tr>
-        `;
-    });
-    
-    taulaHTML += `</tbody></table>`;
-    taulaJugadors.innerHTML = taulaHTML;
-    
-    overlay.style.display = 'block';
-    document.body.style.overflow = 'hidden'; // Evita scroll de fons
-}
-
-function tancarDetalls() {
-    document.getElementById('detall-equip').style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-document.addEventListener("DOMContentLoaded", generarSeccioEquips);

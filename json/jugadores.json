@@ -46,7 +46,7 @@
         }
     },
     {
-        "equip": "Real Madrid CF",
+        "equip": "Real Madrid",
         "escut": "img/escudos/real-madrid.png",
         "jugadors": [
             {
@@ -414,7 +414,7 @@
         }
     },
     {
-        "equip": "RC Celta de Vigo",
+        "equip": "Celta de Vigo",
         "escut": "img/escudos/celta.png",
         "jugadors": [
             {
@@ -782,7 +782,7 @@
         }
     },
     {
-        "equip": "Real Valladolid CF",
+        "equip": "Real Valladolid",
         "escut": "img/escudos/valladolid.png",
         "jugadors": [
             {

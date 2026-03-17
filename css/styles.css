@@ -21,6 +21,7 @@ body {
 body h1, h2, h3, span, th, td {
    font-family: var(--fuente-titulo);
    color: var(--color-titulo);
+   text-align: center;
 }
 
 body h1 {
@@ -230,165 +231,113 @@ body a:hover {
 /* Estadisticas de la temporada */
 
 .contenedor-estadisticas {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    padding: 40px 20px;
-    color: white;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 40px;
+   padding: 40px 20px;
+   color: white;
 }
 
 .tabla-stats {
-    flex: 1;
-    min-width: 300px;
-    max-width: 350px;
+   flex: 1;
+   min-width: 300px;
+   max-width: 350px;
 }
 
 .tabla-stats h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 10px;
+   text-align: center;
+   margin-bottom: 20px;
+   border-bottom: 1px solid var(--verde);
+   padding-bottom: 10px;
 }
 
 .tabla-stats table {
-    width: 100%;
-    border-collapse: collapse;
+   width: 100%;
+   border-collapse: collapse;
 }
 
 .tabla-stats th, .tabla-stats td {
-    padding: 12px 5px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
+   padding: 12px 5px;
+   border-bottom: 1px solid var(--verde);
+   text-align: center;
 }
 
 .tabla-escudo-img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
+   width: 28px;
+   height: 28px;
+   object-fit: contain;
+   display: block;
+   margin: 0 auto;
 }
 
 .valor-stat {
-    font-weight: bold;
+   font-weight: bold;
 }
 
 .jugador-nombre {
-    display: block;
-    text-align: center;
+   display: block;
+   text-align: center;
 }
 
 .tabla-escudo-img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-    display: block;
+   width: 30px;
+   height: 30px;
+   object-fit: contain;
+   display: block;
 }
 
 .valor-stat {
-    text-align: right;
-    font-weight: bold;
-    font-size: 1.2rem;
+   text-align: right;
+   font-weight: bold;
+   font-size: 1.2rem;
 }
 
 .tabla-stats tr:last-child td {
-    border-bottom: none;
+   border-bottom: none;
 }
 
 /* Equipos de la liga */
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
+.contenedor-equipos {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
 }
 
-.equip-card {
-    height: 250px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.3s;
-    position: relative;
-    overflow: hidden;
-    border: 2px solid rgba(255,255,255,0.1);
+.escudo-equipos {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 20px;
+   padding: 20px;
+   width: 80%;
 }
 
-.equip-card:hover {
-    transform: scale(1.05);
+.tarjeta-individual {
+   height: 325px;
+   width: 300px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
 }
 
-.equip-card img {
-    width: 80px;
-    z-index: 2;
+.tarjeta-individual img {
+   width: 90px;
+   height: 90px;
+   object-fit: contain;
+   margin-bottom: 12px;
 }
 
-.equip-card h3 {
-    color: white;
-    margin-top: 15px;
-    z-index: 2;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+.tarjeta-individual h3 {
+   margin: 0;
+   font-size: 1rem;
+   font-family: sans-serif;
+   text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+   text-align: center;
 }
 
-.overlay-detall {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.95);
-    display: none;
-    z-index: 1000;
-    overflow-y: auto;
-    color: white;
-}
-
-.contingut-detall {
-    max-width: 900px;
-    margin: 50px auto;
-    padding: 20px;
-}
-
-.tancar {
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    font-size: 40px;
-    cursor: pointer;
-}
-
-.entrenador-flex {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 20px;
-}
-
-.entrenador-flex img {
-    width: 120px;
-    border-radius: 50%;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #222;
-}
-
-.foto-jugador {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
+.plantilla-equipos { 
+   opacity: 0;
 }
