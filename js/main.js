@@ -345,3 +345,80 @@ document.addEventListener("DOMContentLoaded", function() {
     generarSlidersFondoEscudos(proximaJornada);
     generarTablasEstadisticas();
 });
+
+const dadesEquips = [ /* EL TEU JSON AQUÍ */ ];
+
+function generarSeccioEquips() {
+    const grid = document.getElementById('grid-equips');
+    
+    dadesEquips.forEach(equip => {
+        const colors = coloresEquipos[equip.equip] || { principal: '#333', secundario: '#000' };
+        
+        const card = document.createElement('div');
+        card.className = 'equip-card';
+        card.style.background = `linear-gradient(135deg, ${colors.principal}, ${colors.secundario})`;
+        
+        card.innerHTML = `
+            <img src="${equip.escut}" alt="${equip.equip}">
+            <h3>${equip.equip}</h3>
+        `;
+        
+        card.onclick = () => mostrarDetalls(equip);
+        grid.appendChild(card);
+    });
+}
+
+function mostrarDetalls(equip) {
+    const overlay = document.getElementById('detall-equip');
+    const infoEntrenador = document.getElementById('info-entrenador');
+    const taulaJugadors = document.getElementById('taula-jugadors');
+    
+    infoEntrenador.innerHTML = `
+        <div class="entrenador-flex">
+            <img src="${equip.entrenador.foto}" alt="${equip.entrenador.nomPersona}">
+            <div>
+                <h2>${equip.entrenador.nomPersona}</h2>
+                <p>Entrenador del ${equip.equip}</p>
+            </div>
+        </div>
+    `;
+    
+    let taulaHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Posició</th>
+                    <th>Qualitat</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    equip.jugadors.forEach(j => {
+        taulaHTML += `
+            <tr>
+                <td><img src="${j.foto}" class="foto-jugador"></td>
+                <td>${j.dorsal}</td>
+                <td>${j.nomPersona}</td>
+                <td>${j.posicio}</td>
+                <td>${j.qualitat}</td>
+            </tr>
+        `;
+    });
+    
+    taulaHTML += `</tbody></table>`;
+    taulaJugadors.innerHTML = taulaHTML;
+    
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Evita scroll de fons
+}
+
+function tancarDetalls() {
+    document.getElementById('detall-equip').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+document.addEventListener("DOMContentLoaded", generarSeccioEquips);
