@@ -90,6 +90,8 @@ const zamora = [
 
 // 3. FUNCIONES DE RENDERIZADO
 
+// Próxima jornada
+
 function generarSlidersFondoEscudos(partidos) {
     const container = document.getElementById('contenedor-sliders');
     if (!container) return;
@@ -122,6 +124,8 @@ function generarSlidersFondoEscudos(partidos) {
         container.appendChild(slider);
     });
 }
+
+// Tablas de estadísticas
 
 function generarTablasEstadisticas() {
     const mapeo = {
@@ -158,23 +162,9 @@ function renderizarTabla(idContenedor, titulo, datos, etiquetaValor, mapeo) {
     container.innerHTML = html + `</tbody></table>`;
 }
 
-function dibujarTarjetasEquipos() {
-    const contenedor = document.getElementById('escudo');
-    if (!contenedor) return;
+// Tarjetas de equipos
 
-    contenedor.innerHTML = '';
-    dadesEquips.forEach(equipo => {
-        const colores = coloresEquipos[equipo.equip] || { principal: '#333', secundario: '#111' };
-        const tarjeta = document.createElement('div');
-        tarjeta.className = 'tarjeta-individual';
-        tarjeta.style.background = `linear-gradient(135deg, ${colores.principal}, ${colores.secundario})`;
-        tarjeta.innerHTML = `
-            <img src="${equipo.escut}" alt="${equipo.equip}">
-            <h3>${equipo.equip}</h3>
-        `;
-        contenedor.appendChild(tarjeta);
-    });
-}
+
 
 // 4. LÓGICA DEL SLIDER AUTOMÁTICO
 function moveSlider() {
@@ -195,7 +185,6 @@ function moveSlider() {
 
 // 5. INICIALIZACIÓN ÚNICA
 document.addEventListener("DOMContentLoaded", function() {
-    // Renderizar todo
     generarSlidersFondoEscudos(proximaJornada);
     generarTablasEstadisticas();
     dibujarTarjetasEquipos();
