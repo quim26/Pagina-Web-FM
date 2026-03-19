@@ -322,7 +322,7 @@ function dibujarTarjetasEquipos(dadesJugadors) {
 
 function dibujarClasificacion() {
     const contenedor = document.getElementById('tabla-clasificacion');
-    if (!contenedor) return;
+    if (!contenedor || typeof dadesClasificacio === 'undefined') return;
 
     let tablaHTML = `
         <table class="tabla-liga">
@@ -374,25 +374,43 @@ function dibujarClasificacion() {
 // 4. INICIALIZACIÓN ÚNICA
 document.addEventListener("DOMContentLoaded", async function() {
     try {
-        const resJugadores = await fetch('json/jugadores.json');
-        const dadesJugadors = await resJugadores.json();
+        let dadesJugadors = [];
+        let dadesPartidos = [];
 
-        const resPartidos = await fetch('json/partidos.json');
-        const dadesPartidos = await resPartidos.json();
+        if (document.getElementById('contenedor-tarjetas')) {
+            const resJugadores = await fetch('json/jugadores.json');
+            dadesJugadors = await resJugadores.json();
+            dibujarTarjetasEquipos(dadesJugadors);
+        }
 
-        if (document.getElementById('contenedor-sliders')) generarSlidersFondoEscudos(proximaJornada);
-        if (document.querySelector('.contenedor-estadisticas')) generarTablasEstadisticas();
-        if (document.getElementById('contenedor-tarjetas')) dibujarTarjetasEquipos(dadesJugadors);
-        if (document.getElementById('ticker-track')) generarTickerResultados(dadesPartidos);
-        if (document.getElementById('tabla-clasificacion')) dibujarClasificacion(dadesClasificacio);
+        if (document.getElementById('ticker-track')) {
+            const resPartidos = await fetch('json/partidos.json');
+            dadesPartidos = await resPartidos.json();
+            generarTickerResultados(dadesPartidos);
+        }
+
+        if (document.getElementById('contenedor-sliders')) {
+            generarSlidersFondoEscudos(proximaJornada);
+        }
+
+        if (document.querySelector('.contenedor-estadisticas')) {
+            generarTablasEstadisticas();
+        }
+
+        if (document.getElementById('tabla-clasificacion')) {
+            dibujarClasificacion();
+        }
 
         const sliderContainer = document.querySelector('.slider-container');
         if (sliderContainer) {
             let sliderInterval = setInterval(moveSlider, 3000);
             sliderContainer.addEventListener('mouseenter', () => clearInterval(sliderInterval));
-            sliderContainer.addEventListener('mouseleave', () => sliderInterval = setInterval(moveSlider, 3000));
+            sliderContainer.addEventListener('mouseleave', () => {
+                clearInterval(sliderInterval);
+                sliderInterval = setInterval(moveSlider, 3000);
+            });
         }
     } catch (error) {
-        console.error(error);
+        console.error("Error en la inicialización:", error);
     }
 });
