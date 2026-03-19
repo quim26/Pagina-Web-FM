@@ -371,11 +371,109 @@ function dibujarClasificacion() {
     contenedor.innerHTML = tablaHTML;
 }
 
+// Formulario
+
+function inicializarFormularioAlta() {
+    const form = document.getElementById('formulario');
+    if (!form) return;
+
+    let opcionesEquipos = dadesEquips.map(e => `<option value="${e.equip}">${e.equip}</option>`).join('');
+
+    form.innerHTML = `
+        <div class="fila">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="apellido" placeholder="Apellido" required>
+        </div>
+        
+        <div class="columna-rango">
+            <label>Altura: <span id="v-altura" class="valor-rango">185</span> cm</label>
+            <input type="range" id="altura" min="150" max="220" value="185">
+        </div>
+
+        <div class="columna-rango">
+            <label>Peso: <span id="v-peso" class="valor-rango">85</span> kg</label>
+            <input type="range" id="peso" min="60" max="110" value="85">
+        </div>
+
+        <select id="equipo" required>
+            <option value="" disabled selected>Selecciona un equipo</option>
+            ${opcionesEquipos}
+        </select>
+        
+        <select id="rol" required>
+            <option value="" disabled selected>Tipo de perfil</option>
+            <option value="jugador">Jugador</option>
+            <option value="entrenador">Entrenador</option>
+        </select>
+        
+        <div id="seccionJugador" class="oculto fila">
+            <input type="text" id="posicion" placeholder="Posición">
+            <input type="number" id="dorsal" placeholder="Dorsal">
+        </div>
+        
+        <label>Foto de perfil</label>
+        <input type="file" id="imagen" accept="image/*">
+        
+        <button type="submit">Registrar Alta</button>
+    `;
+
+    const inputAltura = document.getElementById('altura');
+    const inputPeso = document.getElementById('peso');
+    const txtAltura = document.getElementById('v-altura');
+    const txtPeso = document.getElementById('v-peso');
+    const selectRol = document.getElementById('rol');
+    const seccionJugador = document.getElementById('seccionJugador');
+
+    inputAltura.addEventListener('input', () => {
+        txtAltura.textContent = inputAltura.value;
+    });
+
+    inputPeso.addEventListener('input', () => {
+        txtPeso.textContent = inputPeso.value;
+    });
+
+    selectRol.addEventListener('change', () => {
+        if (selectRol.value === 'jugador') {
+            seccionJugador.classList.remove('oculto');
+            seccionJugador.style.display = 'flex';
+        } else {
+            seccionJugador.classList.add('oculto');
+            seccionJugador.style.display = 'none';
+        }
+    });
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const datos = {
+            nombre: document.getElementById('nombre').value,
+            apellido: document.getElementById('apellido').value,
+            altura: inputAltura.value,
+            peso: inputPeso.value,
+            equipo: document.getElementById('equipo').value,
+            rol: selectRol.value,
+            posicion: document.getElementById('posicion').value,
+            dorsal: document.getElementById('dorsal').value,
+            foto: document.getElementById('imagen').files[0]?.name || null
+        };
+        console.log('Registro enviado:', datos);
+        alert('Alta procesada correctamente.');
+        form.reset();
+        txtAltura.textContent = "185";
+        txtPeso.textContent = "85";
+        seccionJugador.classList.add('oculto');
+        seccionJugador.style.display = 'none';
+    });
+}
+
 // 4. INICIALIZACIÓN ÚNICA
 document.addEventListener("DOMContentLoaded", async function() {
     try {
         let dadesJugadors = [];
         let dadesPartidos = [];
+
+        if (document.getElementById('formulario')) {
+            inicializarFormularioAlta();
+        }
 
         if (document.getElementById('contenedor-tarjetas')) {
             const resJugadores = await fetch('json/jugadores.json');

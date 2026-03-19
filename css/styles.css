@@ -16,9 +16,11 @@ body {
    margin: 0;
    padding: 0;
    background-color: var(--fondo);
+   justify-content: center;
+   align-items: center;
 }
 
-body h1, h2, h3, span, th, td {
+body h1, h2, h3, span, th, td, label {
    font-family: var(--fuente-titulo);
    color: var(--color-titulo);
    text-align: center;
@@ -548,4 +550,111 @@ body a:hover {
 
 .tabla-liga tr:hover {
    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Formulario */
+
+.formulario {
+   background: var(--fondo);
+   padding: 30px;
+   width: 90%; 
+   max-width: 500px;
+   display: flex;
+   flex-direction: column;
+   gap: 30px;
+   border-radius: 8px;
+   box-sizing: border-box;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.formulario .fila {
+   display: flex;
+   gap: 25px;
+   align-items: center;
+}
+
+.formulario .columna-rango {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   gap: 15px;
+}
+
+.formulario input[type="text"], 
+.formulario input[type="number"],
+.formulario input[type="file"],
+.formulario select {
+   padding: 12px;
+   border: 1px solid #c9bebe;
+   border-radius: 6px;
+   font-size: 16px;
+   width: 100%;
+   box-sizing: border-box;
+   background-color: #c9bebe; 
+   color: #1a1a1a;
+}
+
+.formulario input[type="range"] {
+   width: 100%;
+   cursor: pointer;
+}
+
+.formulario .oculto {
+   display: none;
+}
+
+.formulario button {
+   background-color: var(--verde);
+   padding: 16px;
+   border: none;
+   border-radius: 6px;
+   font-size: 16px;
+   font-weight: bold;
+   cursor: pointer;
+   color: white;
+}
+
+.formulario label {
+   font-weight: 600;
+   margin-bottom: -5px;
+   font-size: 14px;
+}
+
+.formulario input[type="range"] {
+   -webkit-appearance: none;
+   appearance: none;
+   width: 100%;
+   height: 8px;
+   background: #ddd;
+   border-radius: 5px;
+   outline: none;
+}
+
+.formulario input[type="range"]::-webkit-slider-thumb {
+   -webkit-appearance: none;
+   appearance: none;
+   width: 18px;
+   height: 18px;
+   background: var(--verde);
+   cursor: pointer;
+   border-radius: 50%;
+   border: 2px solid #fff;
+}
+
+.formulario input[type="range"]::-moz-range-thumb {
+   width: 18px;
+   height: 18px;
+   background: var(--verde);
+   cursor: pointer;
+   border-radius: 50%;
+   border: 2px solid #fff;
+}
+
+.formulario .valor-rango {
+   color: var(--verde);
+   font-weight: bold;
+   font-size: 14px;
+   min-width: 60px;
+   text-align: right;
 }
