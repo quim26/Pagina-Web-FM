@@ -180,27 +180,100 @@ function renderizarTabla(idContenedor, titulo, datos, etiquetaValor, mapeo) {
 
 // Tarjetas de equipos
 
-function dibujarTarjetasEquipos() {
+document.addEventListener("DOMContentLoaded", async function() {
+    try {
+        const response = await fetch('json/jugadores.json');
+        const dadesJugadors = await response.json();
+
+        generarSlidersFondoEscudos(proximaJornada);
+        generarTablasEstadisticas();
+        dibujarTarjetasEquipos(dadesJugadors);
+
+        let sliderInterval = setInterval(moveSlider, 3000);
+        const sliderContainer = document.querySelector('.slider-container');
+        if (sliderContainer) {
+            sliderContainer.addEventListener('mouseenter', () => clearInterval(sliderInterval));
+            sliderContainer.addEventListener('mouseleave', () => sliderInterval = setInterval(moveSlider, 3000));
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+function dibujarTarjetasEquipos(dadesJugadors) {
     const contenedor = document.getElementById('contenedor-tarjetas');
+    contenedor.innerHTML = '';
+
+    const ordenPosiciones = {
+        "Porter": 1,
+        "Defensa": 2,
+        "Migcampista": 3,
+        "Davanter": 4
+    };
     
     dadesEquips.forEach(equipoInfo => {
         const colores = coloresEquipos[equipoInfo.equip];
+        const infoCompleta = dadesJugadors.find(e => e.equip === equipoInfo.equip);
+        
         const tarjeta = document.createElement('div');
         tarjeta.className = 'tarjeta-equipo';
+        tarjeta.style.setProperty('--color-p', colores.principal);
+        tarjeta.style.setProperty('--color-s', colores.secundario);
 
-        tarjeta.style.backgroundImage = `
-            url('${equipoInfo.escut}'), 
-            linear-gradient(135deg, ${colores.principal} 0%, ${colores.secundario} 100%)
-        `;
+        const conteFrontal = document.createElement('div');
+        conteFrontal.className = 'escudo-frontal-conte';
+
+        const imgEscudo = document.createElement('img');
+        imgEscudo.src = equipoInfo.escut;
+        imgEscudo.className = 'escudo-frontal';
         
-        tarjeta.style.backgroundSize = '50%, cover';
-        tarjeta.style.backgroundPosition = 'center 40%, center';
-        tarjeta.style.backgroundRepeat = 'no-repeat, no-repeat';
+        const nombreEquipo = document.createElement('h3');
+        nombreEquipo.textContent = equipoInfo.equip;
+        nombreEquipo.className = 'nombre-equipo-frontal';
 
-        const nombre = document.createElement('h3');
-        nombre.textContent = equipoInfo.equip;
+        conteFrontal.appendChild(imgEscudo);
+        conteFrontal.appendChild(nombreEquipo);
 
-        tarjeta.appendChild(nombre);
+        const infoHover = document.createElement('div');
+        infoHover.className = 'info-hover';
+
+        if (infoCompleta) {
+            const divEntrenador = document.createElement('div');
+            divEntrenador.className = 'entrenador-header';
+            divEntrenador.innerHTML = `
+                <img src="${infoCompleta.entrenador.foto}" alt="">
+                <span>${infoCompleta.entrenador.nomPersona}</span>
+            `;
+            infoHover.appendChild(divEntrenador);
+
+            const jugadoresOrdenados = [...infoCompleta.jugadors].sort((a, b) => {
+                if (ordenPosiciones[a.posicio] !== ordenPosiciones[b.posicio]) {
+                    return ordenPosiciones[a.posicio] - ordenPosiciones[b.posicio];
+                }
+                return b.qualitat - a.qualitat;
+            });
+
+            const tabla = document.createElement('table');
+            tabla.className = 'tabla-jugadores';
+            let filas = `<thead><tr><th>#</th><th>Nombre</th><th>Pos</th><th>Med</th></tr></thead><tbody>`;
+            
+            jugadoresOrdenados.slice(0, 5).forEach(j => {
+                filas += `
+                    <tr>
+                        <td>${j.dorsal}</td>
+                        <td>${j.nomPersona.split(' ').pop()}</td>
+                        <td>${j.posicio.substring(0, 3)}</td>
+                        <td>${j.qualitat}</td>
+                    </tr>
+                `;
+            });
+            filas += `</tbody>`;
+            tabla.innerHTML = filas;
+            infoHover.appendChild(tabla);
+        }
+
+        tarjeta.appendChild(conteFrontal);
+        tarjeta.appendChild(infoHover);
         contenedor.appendChild(tarjeta);
     });
 }
