@@ -128,6 +128,8 @@ body a:hover {
    3. Inicio
    ========================================= */
 
+/* Barra de partidos jugados */
+
 /* Slider de partidos próximos */
 
 .slider-title {
@@ -300,132 +302,132 @@ body a:hover {
 /* Equipos de la liga */
 
 .contenedor-tarjetas {
-    width: 70%;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    padding: 30px 0;
+   width: 70%;
+   margin: 0 auto;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 25px;
+   padding: 30px 0;
 }
 
 .tarjeta-equipo {
-    height: 380px;
-    width: 280px;
-    border-radius: 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--color-p) 0%, var(--color-s) 100%);
+   height: 380px;
+   width: 280px;
+   border-radius: 18px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding: 20px;
+   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+   transition: transform 0.3s ease;
+   cursor: pointer;
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(135deg, var(--color-p) 0%, var(--color-s) 100%);
 }
 
 .tarjeta-equipo::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0);
-    z-index: 1;
+   content: '';
+   position: absolute;
+   top: 0; left: 0; width: 100%; height: 100%;
+   background: rgba(0, 0, 0, 0);
+   z-index: 1;
 }
 
 .tarjeta-equipo:hover::before {
-    background: rgba(0, 0, 0, 0.9);
+   background: rgba(0, 0, 0, 0.9);
 }
 
 .escudo-frontal-conte {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    transition: opacity 0.3s ease;
-    z-index: 2;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   height: 100%;
+   transition: opacity 0.3s ease;
+   z-index: 2;
 }
 
 .escudo-frontal {
-    width: 60%;
-    margin-bottom: 20px;
+   width: 60%;
+   margin-bottom: 20px;
 }
 
 .nombre-equipo-frontal {
-    font-size: 1.3rem;
-    text-align: center;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-    text-transform: uppercase;
-    margin: 0;
+   font-size: 1.3rem;
+   text-align: center;
+   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+   text-transform: uppercase;
+   margin: 0;
 }
 
 .info-hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 25px 15px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 3;
-    box-sizing: border-box;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 25px 15px;
+   opacity: 0;
+   transition: opacity 0.3s ease;
+   z-index: 3;
+   box-sizing: border-box;
 }
 
 .tarjeta-equipo:hover .escudo-frontal-conte {
-    opacity: 0;
+   opacity: 0;
 }
 
 .tarjeta-equipo:hover .info-hover {
-    opacity: 1;
+   opacity: 1;
 }
 
 .entrenador-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 35px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-bottom: 35px;
 }
 
 .entrenador-header img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 3px solid var(--verde);
-    object-fit: cover;
-    transition: transform 0.3s ease;
+   width: 100px;
+   height: 100px;
+   border-radius: 50%;
+   border: 3px solid var(--verde);
+   object-fit: cover;
+   transition: transform 0.3s ease;
 }
 
 .tarjeta-equipo:hover .entrenador-header img {
-    transform: scale(1.1);
+   transform: scale(1.1);
 }
 
 .entrenador-header span {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-top: 10px;
+   font-size: 1.1rem;
+   font-weight: bold;
+   margin-top: 10px;
 }
 
 .tabla-jugadores {
-    width: 100%;
-    font-size: 0.95rem;
-    border-collapse: collapse;
-    text-align: left;
+   width: 100%;
+   font-size: 0.95rem;
+   border-collapse: collapse;
+   text-align: left;
 }
 
 .tabla-jugadores th {
-    border-bottom: 2px solid var(--verde);
-    padding-bottom: 5px;
-    text-transform: uppercase;
+   border-bottom: 2px solid var(--verde);
+   padding-bottom: 5px;
+   text-transform: uppercase;
 }
 
 .tabla-jugadores td {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--verde);
+   padding: 8px 0;
+   border-bottom: 1px solid var(--verde);
 }
