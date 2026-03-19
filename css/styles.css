@@ -478,3 +478,74 @@ body a:hover {
    padding: 8px 0;
    border-bottom: 1px solid var(--verde);
 }
+
+/* Clasificación de la liga */
+
+#tabla-clasificacion {
+   width: 100%;
+   margin: 10px auto;
+   display: flex;
+   justify-content: center;
+}
+
+.tabla-liga {
+   width: 100%;
+   border-collapse: collapse;
+   background: rgba(0, 0, 0, 0.2);
+   border-radius: 15px;
+   overflow: hidden;
+   font-size: 1.2rem;
+   table-layout: auto;
+}
+
+.tabla-liga th {
+   background: #1a1a1a;
+   padding: 5px 20px;
+   border-bottom: 4px solid var(--verde);
+   text-transform: uppercase;
+   font-size: 1.1rem;
+   letter-spacing: 1px;
+   white-space: nowrap;
+}
+
+.tabla-liga th:nth-child(2),
+.tabla-liga td:nth-child(2) {
+   width: 100%;
+   min-width: 400px;
+}
+
+.tabla-liga td {
+   padding: 4px 20px;
+   text-align: center;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+   white-space: nowrap;
+}
+
+.td-equipo {
+   display: flex;
+   align-items: center;
+   gap: 20px;
+   text-align: left;
+   font-weight: 600;
+}
+
+.img-mini-escut {
+   width: 40px;
+   height: 40px;
+   object-fit: contain;
+}
+
+.pts-bold {
+   font-weight: 750;
+   color: var(--verde);
+   font-size: 1.2rem;
+}
+
+.champions { border-left: 6px solid #4285f4; }
+.europa-league { border-left: 6px solid #fb7201; }
+.conference { border-left: 6px solid #00b050; }
+.descenso { border-left: 6px solid #ea4335; }
+
+.tabla-liga tr:hover {
+   background: rgba(255, 255, 255, 0.08);
+}

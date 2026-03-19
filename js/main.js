@@ -97,6 +97,29 @@ const mapeo = {
         "UD Las Palmas": "las-palmas", "Valencia CF": "valencia", "Real Valladolid": "valladolid", "RCD Espanyol": "espanyol"
     };
 
+const dadesClasificacio = [
+    { pos: 1, equip: "FC Barcelona", escut: "img/escudos/barcelona.png", pj: 19, pg: 16, pe: 1, pp: 2, gf: 55, gc: 15, pts: 49 },
+    { pos: 2, equip: "Real Madrid", escut: "img/escudos/real-madrid.png", pj: 19, pg: 14, pe: 3, pp: 2, gf: 42, gc: 12, pts: 45 },
+    { pos: 3, equip: "Atlético de Madrid", escut: "img/escudos/atletico-madrid.png", pj: 19, pg: 11, pe: 5, pp: 3, gf: 32, gc: 18, pts: 38 },
+    { pos: 4, equip: "Villarreal CF", escut: "img/escudos/villarreal.png", pj: 19, pg: 10, pe: 5, pp: 4, gf: 30, gc: 21, pts: 35 },
+    { pos: 5, equip: "Athletic Club", escut: "img/escudos/athletic.png", pj: 19, pg: 9, pe: 6, pp: 4, gf: 28, gc: 20, pts: 33 },
+    { pos: 6, equip: "Real Sociedad", escut: "img/escudos/real-sociedad.png", pj: 19, pg: 9, pe: 4, pp: 6, gf: 25, gc: 22, pts: 31 },
+    { pos: 7, equip: "Girona FC", escut: "img/escudos/girona.png", pj: 19, pg: 8, pe: 5, pp: 6, gf: 29, gc: 26, pts: 29 },
+    { pos: 8, equip: "Real Betis", escut: "img/escudos/betis.png", pj: 19, pg: 7, pe: 7, pp: 5, gf: 24, gc: 22, pts: 28 },
+    { pos: 9, equip: "RCD Mallorca", escut: "img/escudos/mallorca.png", pj: 19, pg: 7, pe: 5, pp: 7, gf: 18, gc: 19, pts: 26 },
+    { pos: 10, equip: "CA Osasuna", escut: "img/escudos/osasuna.png", pj: 19, pg: 7, pe: 4, pp: 8, gf: 22, gc: 28, pts: 25 },
+    { pos: 11, equip: "Sevilla FC", escut: "img/escudos/sevilla.png", pj: 19, pg: 6, pe: 6, pp: 7, gf: 23, gc: 25, pts: 24 },
+    { pos: 12, equip: "Celta de Vigo", escut: "img/escudos/celta.png", pj: 19, pg: 6, pe: 4, pp: 9, gf: 27, gc: 31, pts: 22 },
+    { pos: 13, equip: "Rayo Vallecano", escut: "img/escudos/rayo.png", pj: 19, pg: 5, pe: 6, pp: 8, gf: 19, gc: 24, pts: 21 },
+    { pos: 14, equip: "Valencia CF", escut: "img/escudos/valencia.png", pj: 19, pg: 5, pe: 4, pp: 10, gf: 20, gc: 29, pts: 19 },
+    { pos: 15, equip: "Getafe CF", escut: "img/escudos/getafe.png", pj: 19, pg: 3, pe: 9, pp: 7, gf: 14, gc: 21, pts: 18 },
+    { pos: 16, equip: "Deportivo Alavés", escut: "img/escudos/alaves.png", pj: 19, pg: 4, pe: 5, pp: 10, gf: 17, gc: 28, pts: 17 },
+    { pos: 17, equip: "UD Las Palmas", escut: "img/escudos/las-palmas.png", pj: 19, pg: 4, pe: 4, pp: 11, gf: 18, gc: 32, pts: 16 },
+    { pos: 18, equip: "CD Leganés", escut: "img/escudos/leganes.png", pj: 19, pg: 3, pe: 6, pp: 10, gf: 15, gc: 27, pts: 15 },
+    { pos: 19, equip: "RCD Espanyol", escut: "img/escudos/espanyol.png", pj: 19, pg: 3, pe: 4, pp: 12, gf: 16, gc: 34, pts: 13 },
+    { pos: 20, equip: "Real Valladolid", escut: "img/escudos/valladolid.png", pj: 19, pg: 2, pe: 5, pp: 12, gf: 13, gc: 35, pts: 11 }
+];
+
 // 3. FUNCIONES DE RENDERIZADO
 
 // Partidos jugados (ticker)
@@ -295,6 +318,59 @@ function dibujarTarjetasEquipos(dadesJugadors) {
     });
 }
 
+// Clasificación
+
+function dibujarClasificacion() {
+    const contenedor = document.getElementById('tabla-clasificacion');
+    if (!contenedor) return;
+
+    let tablaHTML = `
+        <table class="tabla-liga">
+            <thead>
+                <tr>
+                    <th>Pos</th>
+                    <th>Equipo</th>
+                    <th>PJ</th>
+                    <th>PG</th>
+                    <th>PE</th>
+                    <th>PP</th>
+                    <th>GF</th>
+                    <th>GC</th>
+                    <th>Pts</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    dadesClasificacio.forEach(e => {
+        let clasePosicion = "";
+        if (e.pos <= 4) clasePosicion = "champions";
+        else if (e.pos <= 6) clasePosicion = "europa-league";
+        else if (e.pos === 7) clasePosicion = "conference";
+        else if (e.pos >= 18) clasePosicion = "descenso";
+
+        tablaHTML += `
+            <tr class="${clasePosicion}">
+                <td>${e.pos}</td>
+                <td class="td-equipo">
+                    <img src="${e.escut}" class="img-mini-escut">
+                    ${e.equip}
+                </td>
+                <td>${e.pj}</td>
+                <td>${e.pg}</td>
+                <td>${e.pe}</td>
+                <td>${e.pp}</td>
+                <td>${e.gf}</td>
+                <td>${e.gc}</td>
+                <td class="pts-bold">${e.pts}</td>
+            </tr>
+        `;
+    });
+
+    tablaHTML += `</tbody></table>`;
+    contenedor.innerHTML = tablaHTML;
+}
+
 // 4. INICIALIZACIÓN ÚNICA
 document.addEventListener("DOMContentLoaded", async function() {
     try {
@@ -304,14 +380,15 @@ document.addEventListener("DOMContentLoaded", async function() {
         const resPartidos = await fetch('json/partidos.json');
         const dadesPartidos = await resPartidos.json();
 
-        generarSlidersFondoEscudos(proximaJornada);
-        generarTablasEstadisticas();
-        dibujarTarjetasEquipos(dadesJugadors);
-        generarTickerResultados(dadesPartidos);
+        if (document.getElementById('contenedor-sliders')) generarSlidersFondoEscudos(proximaJornada);
+        if (document.querySelector('.contenedor-estadisticas')) generarTablasEstadisticas();
+        if (document.getElementById('contenedor-tarjetas')) dibujarTarjetasEquipos(dadesJugadors);
+        if (document.getElementById('ticker-track')) generarTickerResultados(dadesPartidos);
+        if (document.getElementById('tabla-clasificacion')) dibujarClasificacion(dadesClasificacio);
 
-        let sliderInterval = setInterval(moveSlider, 3000);
         const sliderContainer = document.querySelector('.slider-container');
         if (sliderContainer) {
+            let sliderInterval = setInterval(moveSlider, 3000);
             sliderContainer.addEventListener('mouseenter', () => clearInterval(sliderInterval));
             sliderContainer.addEventListener('mouseleave', () => sliderInterval = setInterval(moveSlider, 3000));
         }
