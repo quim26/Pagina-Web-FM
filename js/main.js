@@ -99,6 +99,23 @@ const mapeo = {
 
 // 3. FUNCIONES DE RENDERIZADO
 
+// Partidos jugados (ticker)
+
+function generarTickerResultados(partidos) {
+    const track = document.getElementById('ticker-track');
+    if (!track) return;
+    
+    const itemsHTML = partidos.map(p => `
+        <div class="ticker-item">
+            <img src="${p.equip_local.escut}" class="ticker-escudo">
+            <span class="ticker-marcador">${p.resultat}</span>
+            <img src="${p.equip_visitant.escut}" class="ticker-escudo">
+        </div>
+    `).join('');
+
+    track.innerHTML = itemsHTML + itemsHTML;
+}
+
 // Próxima jornada
 
 function generarSlidersFondoEscudos(partidos) {
@@ -279,17 +296,26 @@ function dibujarTarjetasEquipos(dadesJugadors) {
 }
 
 // 4. INICIALIZACIÓN ÚNICA
-document.addEventListener("DOMContentLoaded", function() {
-    generarSlidersFondoEscudos(proximaJornada);
-    generarTablasEstadisticas();
-    dibujarTarjetasEquipos();
+document.addEventListener("DOMContentLoaded", async function() {
+    try {
+        const resJugadores = await fetch('json/jugadores.json');
+        const dadesJugadors = await resJugadores.json();
 
-    // Iniciar Intervalo Slider
-    let sliderInterval = setInterval(moveSlider, 3000);
+        const resPartidos = await fetch('json/partidos.json');
+        const dadesPartidos = await resPartidos.json();
 
-    const sliderContainer = document.querySelector('.slider-container');
-    if (sliderContainer) {
-        sliderContainer.addEventListener('mouseenter', () => clearInterval(sliderInterval));
-        sliderContainer.addEventListener('mouseleave', () => sliderInterval = setInterval(moveSlider, 3000));
+        generarSlidersFondoEscudos(proximaJornada);
+        generarTablasEstadisticas();
+        dibujarTarjetasEquipos(dadesJugadors);
+        generarTickerResultados(dadesPartidos);
+
+        let sliderInterval = setInterval(moveSlider, 3000);
+        const sliderContainer = document.querySelector('.slider-container');
+        if (sliderContainer) {
+            sliderContainer.addEventListener('mouseenter', () => clearInterval(sliderInterval));
+            sliderContainer.addEventListener('mouseleave', () => sliderInterval = setInterval(moveSlider, 3000));
+        }
+    } catch (error) {
+        console.error(error);
     }
 });

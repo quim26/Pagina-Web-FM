@@ -130,6 +130,53 @@ body a:hover {
 
 /* Barra de partidos jugados */
 
+.ticker-container {
+   width: 100%;
+   background: #111;
+   overflow: hidden;
+   height: 90px;
+   display: flex;
+   align-items: center;
+   position: relative;
+   border-bottom: 3px solid;
+   border-image: linear-gradient(90deg, var(--azul), var(--rojo)) 1;
+}
+
+.ticker-track {
+   display: flex;
+   white-space: nowrap;
+   animation: ticker-scroll 45s linear infinite;
+}
+
+.ticker-track:hover {
+   animation-play-state: paused;
+}
+
+.ticker-item {
+   display: flex;
+   align-items: center;
+   padding: 0 60px;
+   gap: 25px;
+   border-right: 2px solid var(--verde);
+}
+
+.ticker-escudo {
+   width: 55px;
+   height: 55px;
+   object-fit: contain;
+}
+
+.ticker-marcador {
+   font-size: 2.2rem;
+   letter-spacing: 3px;
+   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+@keyframes ticker-scroll {
+   0% { transform: translateX(0); }
+   100% { transform: translateX(-50%); }
+}
+
 /* Slider de partidos próximos */
 
 .slider-title {
