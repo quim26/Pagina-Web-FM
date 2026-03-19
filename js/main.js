@@ -377,9 +377,15 @@ function inicializarFormularioAlta() {
     const form = document.getElementById('formulario');
     if (!form) return;
 
+    const escutDefecte = 'img/escudos/agenteslibres.png';
+
     let opcionesEquipos = dadesEquips.map(e => `<option value="${e.equip}">${e.equip}</option>`).join('');
 
     form.innerHTML = `
+        <div class="contenedor-escudo">
+            <img id="escudo-equipo" src="${escutDefecte}" alt="Escudo del equipo">
+        </div>
+
         <div class="fila">
             <input type="text" id="nombre" placeholder="Nombre" required>
             <input type="text" id="apellido" placeholder="Apellido" required>
@@ -421,6 +427,8 @@ function inicializarFormularioAlta() {
     const inputPeso = document.getElementById('peso');
     const txtAltura = document.getElementById('v-altura');
     const txtPeso = document.getElementById('v-peso');
+    const selectEquipo = document.getElementById('equipo');
+    const imgEscudo = document.getElementById('escudo-equipo');
     const selectRol = document.getElementById('rol');
     const seccionJugador = document.getElementById('seccionJugador');
 
@@ -430,6 +438,15 @@ function inicializarFormularioAlta() {
 
     inputPeso.addEventListener('input', () => {
         txtPeso.textContent = inputPeso.value;
+    });
+
+    selectEquipo.addEventListener('change', () => {
+        const equipoSeleccionado = dadesEquips.find(e => e.equip === selectEquipo.value);
+        if (equipoSeleccionado) {
+            imgEscudo.src = equipoSeleccionado.escut;
+            imgEscudo.style.transform = 'scale(1.1)';
+            setTimeout(() => imgEscudo.style.transform = 'scale(1)', 200);
+        }
     });
 
     selectRol.addEventListener('change', () => {
@@ -449,7 +466,7 @@ function inicializarFormularioAlta() {
             apellido: document.getElementById('apellido').value,
             altura: inputAltura.value,
             peso: inputPeso.value,
-            equipo: document.getElementById('equipo').value,
+            equipo: selectEquipo.value,
             rol: selectRol.value,
             posicion: document.getElementById('posicion').value,
             dorsal: document.getElementById('dorsal').value,
@@ -457,9 +474,11 @@ function inicializarFormularioAlta() {
         };
         console.log('Registro enviado:', datos);
         alert('Alta procesada correctamente.');
+        
         form.reset();
         txtAltura.textContent = "185";
         txtPeso.textContent = "85";
+        imgEscudo.src = escutDefecte;
         seccionJugador.classList.add('oculto');
         seccionJugador.style.display = 'none';
     });
