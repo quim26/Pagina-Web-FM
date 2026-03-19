@@ -88,6 +88,15 @@ const zamora = [
     { nombre: "Dominik Greif", equipo: "RCD Mallorca", cantidad: 6 }
 ];
 
+const mapeo = {
+        "FC Barcelona": "barcelona", "Real Madrid": "real-madrid", "Atlético de Madrid": "atletico-madrid",
+        "Villarreal CF": "villarreal", "Athletic Club": "athletic", "Real Sociedad": "real-sociedad",
+        "Girona FC": "girona", "RCD Mallorca": "mallorca", "Real Betis": "betis", "CA Osasuna": "osasuna",
+        "Rayo Vallecano": "rayo", "Sevilla FC": "sevilla", "Celta de Vigo": "celta",
+        "Deportivo Alavés": "alaves", "CD Leganés": "leganes", "Getafe CF": "getafe",
+        "UD Las Palmas": "las-palmas", "Valencia CF": "valencia", "Real Valladolid": "valladolid", "RCD Espanyol": "espanyol"
+    };
+
 // 3. FUNCIONES DE RENDERIZADO
 
 // Próxima jornada
@@ -125,18 +134,25 @@ function generarSlidersFondoEscudos(partidos) {
     });
 }
 
+function moveSlider() {
+    const track = document.getElementById('contenedor-sliders');
+    if (!track) return;
+    const firstItem = track.querySelector('.slider-item');
+    if (!firstItem) return;
+
+    track.style.transition = "margin-left 0.8s ease-in-out";
+    track.style.marginLeft = "-100%";
+
+    setTimeout(() => {
+        track.style.transition = "none";
+        track.appendChild(firstItem);
+        track.style.marginLeft = "0";
+    }, 800);
+}
+
 // Tablas de estadísticas
 
 function generarTablasEstadisticas() {
-    const mapeo = {
-        "FC Barcelona": "barcelona", "Real Madrid": "real-madrid", "Atlético de Madrid": "atletico-madrid",
-        "Villarreal CF": "villarreal", "Athletic Club": "athletic", "Real Sociedad": "real-sociedad",
-        "Girona FC": "girona", "RCD Mallorca": "mallorca", "Real Betis": "betis", "CA Osasuna": "osasuna",
-        "Rayo Vallecano": "rayo", "Sevilla FC": "sevilla", "Celta de Vigo": "celta",
-        "Deportivo Alavés": "alaves", "CD Leganés": "leganes", "Getafe CF": "getafe",
-        "UD Las Palmas": "las-palmas", "Valencia CF": "valencia", "Real Valladolid": "valladolid", "RCD Espanyol": "espanyol"
-    };
-
     renderizarTabla("tabla-goleadores", "Máximos Goleadores", goleadores, "Goles", mapeo);
     renderizarTabla("tabla-asistentes", "Máximos Asistentes", asistentes, "Asist.", mapeo);
     renderizarTabla("tabla-zamora", "Porterías Imbatidas", zamora, "Partidos", mapeo);
@@ -164,26 +180,32 @@ function renderizarTabla(idContenedor, titulo, datos, etiquetaValor, mapeo) {
 
 // Tarjetas de equipos
 
+function dibujarTarjetasEquipos() {
+    const contenedor = document.getElementById('contenedor-tarjetas');
+    
+    dadesEquips.forEach(equipoInfo => {
+        const colores = coloresEquipos[equipoInfo.equip];
+        const tarjeta = document.createElement('div');
+        tarjeta.className = 'tarjeta-equipo';
 
+        tarjeta.style.backgroundImage = `
+            url('${equipoInfo.escut}'), 
+            linear-gradient(135deg, ${colores.principal} 0%, ${colores.secundario} 100%)
+        `;
+        
+        tarjeta.style.backgroundSize = '50%, cover';
+        tarjeta.style.backgroundPosition = 'center 40%, center';
+        tarjeta.style.backgroundRepeat = 'no-repeat, no-repeat';
 
-// 4. LÓGICA DEL SLIDER AUTOMÁTICO
-function moveSlider() {
-    const track = document.getElementById('contenedor-sliders');
-    if (!track) return;
-    const firstItem = track.querySelector('.slider-item');
-    if (!firstItem) return;
+        const nombre = document.createElement('h3');
+        nombre.textContent = equipoInfo.equip;
 
-    track.style.transition = "margin-left 0.8s ease-in-out";
-    track.style.marginLeft = "-100%";
-
-    setTimeout(() => {
-        track.style.transition = "none";
-        track.appendChild(firstItem);
-        track.style.marginLeft = "0";
-    }, 800);
+        tarjeta.appendChild(nombre);
+        contenedor.appendChild(tarjeta);
+    });
 }
 
-// 5. INICIALIZACIÓN ÚNICA
+// 4. INICIALIZACIÓN ÚNICA
 document.addEventListener("DOMContentLoaded", function() {
     generarSlidersFondoEscudos(proximaJornada);
     generarTablasEstadisticas();

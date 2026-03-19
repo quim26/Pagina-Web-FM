@@ -298,3 +298,34 @@ body a:hover {
 }
 
 /* Equipos de la liga */
+
+.contenedor-tarjetas {
+   width: 70%;
+   margin: 0 auto;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+   gap: 25px;
+   padding: 30px 0;
+}
+
+.tarjeta-equipo {
+   min-height: 300px;
+   border-radius: 18px;
+   display: flex;
+   align-items: flex-end;
+   justify-content: center;
+   padding: 25px;
+   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+   transition: transform 0.3s ease;
+   cursor: pointer;
+}
+
+.tarjeta-equipo h3 {
+   margin: 0;
+   color: white;
+   font-size: 1.3rem;
+   font-family: sans-serif;
+   text-align: center;
+   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+   text-transform: uppercase;
+}
