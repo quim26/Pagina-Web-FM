@@ -1,4 +1,3 @@
-// --- INFO EQUIPOS ---
 const INFO_ADICIONAL = {
     "FC Barcelona": { estadio: "Spotify Camp Nou", fundado: "1899", siglas: "BAR" },
     "Real Madrid CF": { estadio: "Santiago Bernabéu", fundado: "1902", siglas: "RMA" },
@@ -22,7 +21,6 @@ const INFO_ADICIONAL = {
     "Real Valladolid CF": { estadio: "Estadio José Zorrilla", fundado: "1928", siglas: "VLD" }
 };
 
-// --- CLASIFICACIÓN ---
 const datosClasificacion = [
     { pos: 1, nom: "FC Barcelona", pj: 28, g: 22, e: 4, p: 2, gf: 65, gc: 20, pts: 70, escudo: "img/escudos/barcelona.png" },
     { pos: 2, nom: "Real Madrid CF", pj: 28, g: 20, e: 6, p: 2, gf: 58, gc: 22, pts: 66, escudo: "img/escudos/real-madrid.png" },
@@ -46,22 +44,49 @@ const datosClasificacion = [
     { pos: 20, nom: "RCD Espanyol", pj: 28, g: 3, e: 8, p: 17, gf: 22, gc: 50, pts: 17, escudo: "img/escudos/espanyol.png" }
 ];
 
-// --- CLASIFICACIÓN ---
 function mostrarClasificacion() {
     const cuerpo = document.getElementById('cuerpo-clasificacion');
     if (!cuerpo) return;
-    cuerpo.innerHTML = datosClasificacion.map(e => {
-        let zona = e.pos <= 4 ? "zona-champions" : e.pos === 5 ? "zona-europa-league" : e.pos === 6 ? "zona-conference" : e.pos >= 18 ? "zona-descenso" : "";
-        return `<tr class="${zona}">
-            <td><strong>${e.pos}</strong></td>
-            <td class="equipo-tabla"><img src="${e.escudo}" onerror="this.src='img/escudos/default.png'"><p>${e.nom}</p></td>
-            <td>${e.pj}</td><td>${e.g}</td><td>${e.e}</td><td>${e.p}</td><td>${e.gf}</td><td>${e.gc}</td><td>${e.gf - e.gc}</td>
-            <td class="pts-col"><strong>${e.pts}</strong></td>
-        </tr>`;
-    }).join('');
+    cuerpo.innerHTML = ''; 
+    datosClasificacion.forEach(e => {
+        const fila = document.createElement('tr');
+        if (e.pos <= 4) fila.className = "zona-champions";
+        else if (e.pos === 5) fila.className = "zona-europa-league";
+        else if (e.pos === 6) fila.className = "zona-conference";
+        else if (e.pos >= 18) fila.className = "zona-descenso";
+
+        const tdPos = document.createElement('td');
+        const fuerte = document.createElement('strong');
+        fuerte.textContent = e.pos;
+        tdPos.appendChild(fuerte);
+
+        const tdEquipo = document.createElement('td');
+        tdEquipo.className = "equipo-tabla";
+        const img = document.createElement('img');
+        img.src = e.escudo;
+        img.onerror = () => img.src = 'img/escudos/default.png';
+        const pNom = document.createElement('p');
+        pNom.textContent = e.nom;
+        tdEquipo.append(img, pNom);
+
+        const celdas = [e.pj, e.g, e.e, e.p, e.gf, e.gc, e.gf - e.gc];
+        const tdsDatos = celdas.map(dato => {
+            const td = document.createElement('td');
+            td.textContent = dato;
+            return td;
+        });
+
+        const tdPts = document.createElement('td');
+        tdPts.className = "pts-col";
+        const fuertePts = document.createElement('strong');
+        fuertePts.textContent = e.pts;
+        tdPts.appendChild(fuertePts);
+
+        fila.append(tdPos, tdEquipo, ...tdsDatos, tdPts);
+        cuerpo.appendChild(fila);
+    });
 }
 
-// --- INDEX: PRÓXIMOS ENCUENTROS ---
 function cargarProximosEncuentros() {
     const contenedor = document.getElementById('contenedor-proximos-encuentros');
     if (!contenedor) return;
@@ -74,26 +99,41 @@ function cargarProximosEncuentros() {
         { local: "RSO", visit: "GIR", fecha: "MAR 19:00", estadio: "Reale Arena", imgL: "img/escudos/real-sociedad.png", imgV: "img/escudos/girona.png" }
     ];
 
-    contenedor.innerHTML = proximos.map(p => `
-        <div class="tarjeta-partido">
-            <div class="equipo-partido">
-                <img src="${p.imgL}" alt="${p.local}">
-                <h2>${p.local}</h2>
-            </div>
-            <div class="info-partido">
-                <h3 class="fecha-partido">${p.fecha}</h3>
-                <span class="vs">VS</span>
-                <h3 class="estadio-partido">${p.estadio}</h3>
-            </div>
-            <div class="equipo-partido">
-                <img src="${p.imgV}" alt="${p.visit}">
-                <h2>${p.visit}</h2>
-            </div>
-        </div>
-    `).join('');
+    contenedor.innerHTML = '';
+    proximos.forEach(p => {
+        const tarjeta = document.createElement('div');
+        tarjeta.className = 'tarjeta-partido';
+
+        const crearEquipo = (imgSrc, nombre) => {
+            const div = document.createElement('div');
+            div.className = 'equipo-partido';
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = nombre;
+            const h2 = document.createElement('h2');
+            h2.textContent = nombre;
+            div.append(img, h2);
+            return div;
+        };
+
+        const info = document.createElement('div');
+        info.className = 'info-partido';
+        const h3Fecha = document.createElement('h3');
+        h3Fecha.className = 'fecha-partido';
+        h3Fecha.textContent = p.fecha;
+        const vs = document.createElement('span');
+        vs.className = 'vs';
+        vs.textContent = 'VS';
+        const h3Estadio = document.createElement('h3');
+        h3Estadio.className = 'estadio-partido';
+        h3Estadio.textContent = p.estadio;
+        info.append(h3Fecha, vs, h3Estadio);
+
+        tarjeta.append(crearEquipo(p.imgL, p.local), info, crearEquipo(p.imgV, p.visit));
+        contenedor.appendChild(tarjeta);
+    });
 }
 
-// --- INDEX: EQUIPOS ---
 async function cargarEquipos() {
     const contenedor = document.querySelector('.div_equipos');
     if (!contenedor) return;
@@ -107,18 +147,46 @@ async function cargarEquipos() {
         equipos.forEach(eq => {
             const media = (eq.jugadors.reduce((t,j)=>t+j.qualitat,0)/eq.jugadors.length).toFixed(1);
             const info = INFO_ADICIONAL[eq.equip] || {estadio: "Estadio Municipal"};
+            
             const card = document.createElement('div');
             card.className = 'tarjeta-equipo-horizontal';
             card.style.cssText = `cursor:pointer; border-image: linear-gradient(to right, ${colores[eq.equip] || "#ccc 50%, #ccc 50%"}) 1;`;
-            card.innerHTML = `<div class="escudo-contenedor"><img src="${eq.escut}" onerror="this.src='img/equipos/default.png'"></div>
-                              <div class="info-derecha"><h3>${eq.equip}</h3><p><strong>Entrenador:</strong> ${eq.entrenador.nomPersona}</p><p><strong>Estadio:</strong> ${info.estadio}</p><p><strong>Media:</strong> ${media}</p></div>`;
+            
+            const escCont = document.createElement('div');
+            escCont.className = 'escudo-contenedor';
+            const img = document.createElement('img');
+            img.src = eq.escut;
+            img.onerror = () => img.src = 'img/equipos/default.png';
+            escCont.appendChild(img);
+
+            const infoD = document.createElement('div');
+            infoD.className = 'info-derecha';
+            const h3 = document.createElement('h3');
+            h3.textContent = eq.equip;
+            
+            const pEnt = document.createElement('p');
+            const strEnt = document.createElement('strong');
+            strEnt.textContent = 'Entrenador: ';
+            pEnt.append(strEnt, eq.entrenador.nomPersona);
+
+            const pEst = document.createElement('p');
+            const strEst = document.createElement('strong');
+            strEst.textContent = 'Estadio: ';
+            pEst.append(strEst, info.estadio);
+
+            const pMed = document.createElement('p');
+            const strMed = document.createElement('strong');
+            strMed.textContent = 'Media: ';
+            pMed.append(strMed, media);
+
+            infoD.append(h3, pEnt, pEst, pMed);
+            card.append(escCont, infoD);
             card.onclick = () => window.location.href = `plantilla.html?equipo=${encodeURIComponent(eq.equip)}`;
             contenedor.appendChild(card);
         });
     } catch (e) { console.error(e); }
 }
 
-// --- PLANTILLA: JUGADORES ---
 async function cargarPlantilla() {
     const contenedor = document.getElementById('contenedor-jugadores');
     if (!contenedor) return;
@@ -136,30 +204,100 @@ async function cargarPlantilla() {
         const eq = equipos.find(e => e.equip === nombreEquipo);
         if (!eq) return;
 
-        document.getElementById('nombre-equipo-titulo').innerText = eq.equip;
+        document.getElementById('nombre-equipo-titulo').textContent = eq.equip;
+        
         const info = INFO_ADICIONAL[nombreEquipo] || { estadio: "N/A", fundado: "N/A" };
-        document.querySelector('.info-equipo').innerHTML = `<div class="contenedor-info-general">
-            <div class="dato-info"><h3>Equipo</h3><p>${eq.equip}</p></div><div class="dato-info"><h3>Entrenador</h3><p>${eq.entrenador.nomPersona}</p></div>
-            <div class="dato-info"><h3>Estadio</h3><p>${info.estadio}</p></div><div class="dato-info"><h3>Fundado</h3><p>${info.fundado}</p></div></div>`;
+        const infoEq = document.querySelector('.info-equipo');
+        infoEq.innerHTML = '';
+        const contInfoGen = document.createElement('div');
+        contInfoGen.className = 'contenedor-info-general';
+
+        const crearDato = (titulo, valor) => {
+            const div = document.createElement('div');
+            div.className = 'dato-info';
+            const h3 = document.createElement('h3');
+            h3.textContent = titulo;
+            const p = document.createElement('p');
+            p.textContent = valor;
+            div.append(h3, p);
+            return div;
+        };
+
+        contInfoGen.append(
+            crearDato('Equipo', eq.equip),
+            crearDato('Entrenador', eq.entrenador.nomPersona),
+            crearDato('Estadio', info.estadio),
+            crearDato('Fundado', info.fundado)
+        );
+        infoEq.appendChild(contInfoGen);
 
         const trf = palmares[nombreEquipo] || { liga: 0, copa: 0, supercopa: 0, ucl: 0 };
-        document.querySelector('.palmares').innerHTML = `<div class="contenedor-palmares">
-            <div class="item-palmares"><img src="img/trofeos/liga.png"><h3>La Liga</h3><span class="cantidad">${trf.liga}</span></div>
-            <div class="item-palmares"><img src="img/trofeos/copa.png"><h3>Copa del Rey</h3><span class="cantidad">${trf.copa}</span></div>
-            <div class="item-palmares"><img src="img/trofeos/supercopa.png"><h3>Supercopa</h3><span class="cantidad">${trf.supercopa}</span></div>
-            <div class="item-palmares"><img src="img/trofeos/ucl.png"><h3>UCL</h3><span class="cantidad">${trf.ucl}</span></div></div>`;
+        const palmaresDiv = document.querySelector('.palmares');
+        palmaresDiv.innerHTML = '';
+        const contPalmares = document.createElement('div');
+        contPalmares.className = 'contenedor-palmares';
+
+        const trofeos = [
+            { t: 'La Liga', c: trf.liga, img: 'liga.png' },
+            { t: 'Copa del Rey', c: trf.copa, img: 'copa.png' },
+            { t: 'Supercopa', c: trf.supercopa, img: 'supercopa.png' },
+            { t: 'UCL', c: trf.ucl, img: 'ucl.png' }
+        ];
+
+        trofeos.forEach(trofeo => {
+            const div = document.createElement('div');
+            div.className = 'item-palmares';
+            const img = document.createElement('img');
+            img.src = `img/trofeos/${trofeo.img}`;
+            const h3 = document.createElement('h3');
+            h3.textContent = trofeo.t;
+            const span = document.createElement('span');
+            span.className = 'cantidad';
+            span.textContent = trofeo.c;
+            div.append(img, h3, span);
+            contPalmares.appendChild(div);
+        });
+        palmaresDiv.appendChild(contPalmares);
 
         dibujarCampoTactico(eq.jugadors, document.getElementById('canvas-tactico'), eq.entrenador);
 
-        contenedor.innerHTML = eq.jugadors.sort((a,b) => (ordenPos[a.posicio.toUpperCase()] || 99) - (ordenPos[b.posicio.toUpperCase()] || 99) || b.qualitat - a.qualitat).map(j => `
-            <div class="tarjeta-equipo-horizontal">
-                <div class="escudo-contenedor"><img src="${j.foto}" onerror="this.src='img/logos/default_player.png'"></div>
-                <div class="info-derecha"><h3>${j.nomPersona}</h3><p><strong>Posición:</strong> ${tradPos[j.posicio.toUpperCase()] || j.posicio}</p><p><strong>Dorsal:</strong> ${j.dorsal}</p><p><strong>Calidad:</strong> ${j.qualitat}</p></div>
-            </div>`).join('');
+        contenedor.innerHTML = '';
+        eq.jugadors.sort((a,b) => (ordenPos[a.posicio.toUpperCase()] || 99) - (ordenPos[b.posicio.toUpperCase()] || 99) || b.qualitat - a.qualitat).forEach(j => {
+            const card = document.createElement('div');
+            card.className = 'tarjeta-equipo-horizontal';
+            
+            const escCont = document.createElement('div');
+            escCont.className = 'escudo-contenedor';
+            const img = document.createElement('img');
+            img.src = j.foto;
+            img.onerror = () => img.src = 'img/logos/default_player.png';
+            escCont.appendChild(img);
+
+            const infoD = document.createElement('div');
+            infoD.className = 'info-derecha';
+            const h3 = document.createElement('h3');
+            h3.textContent = j.nomPersona;
+
+            const crearP = (label, valor) => {
+                const p = document.createElement('p');
+                const str = document.createElement('strong');
+                str.textContent = label;
+                p.append(str, valor);
+                return p;
+            };
+
+            infoD.append(
+                h3,
+                crearP('Posición: ', tradPos[j.posicio.toUpperCase()] || j.posicio),
+                crearP('Dorsal: ', j.dorsal),
+                crearP('Calidad: ', j.qualitat)
+            );
+            card.append(escCont, infoD);
+            contenedor.appendChild(card);
+        });
     } catch (e) { console.error(e); }
 }
 
-// --- PLANTILLA: CAMPO ---
 function dibujarCampoTactico(jugadores, contenedor, entrenador) {
     const seleccionados = [];
     const usados = new Set();
@@ -175,39 +313,111 @@ function dibujarCampoTactico(jugadores, contenedor, entrenador) {
     const coords = { "PORTER": [{t:50,l:12}], "DEFENSA": [{t:50,l:32},{t:30,l:32}], "MIGCAMPISTA": [{t:50,l:55},{t:25,l:55}], "DAVANTER": [{t:50,l:82},{t:35,l:82}], "COMODIN": [{t:15,l:45}] };
     let vConteo = { PORTER: 0, DEFENSA: 0, MIGCAMPISTA: 0, DAVANTER: 0, COMODIN: 0 };
     
-    let html = `<div class="campo-futbol"><div class="linea linea-central"></div><div class="circulo-central"></div><div class="area izquierda"></div><div class="area derecha"></div><div class="zona-banquillo"><div class="ficha-entrenador"><img src="${entrenador.foto}" onerror="this.src='img/logos/default_player.png'"></div><div class="info-entrenador"><span>Mister</span><h4>${entrenador.nomPersona}</h4></div></div>`;
+    contenedor.innerHTML = '';
+    const campo = document.createElement('div');
+    campo.className = 'campo-futbol';
+
+    const elementosEstaticos = [
+        { c: 'linea linea-central' },
+        { c: 'circulo-central' },
+        { c: 'area izquierda' },
+        { c: 'area derecha' }
+    ];
+    elementosEstaticos.forEach(el => {
+        const div = document.createElement('div');
+        div.className = el.c;
+        campo.appendChild(div);
+    });
+
+    const banquillo = document.createElement('div');
+    banquillo.className = 'zona-banquillo';
+    const fEnt = document.createElement('div');
+    fEnt.className = 'ficha-entrenador';
+    const imgEnt = document.createElement('img');
+    imgEnt.src = entrenador.foto;
+    imgEnt.onerror = () => imgEnt.src = 'img/logos/default_player.png';
+    fEnt.appendChild(imgEnt);
+    const iEnt = document.createElement('div');
+    iEnt.className = 'info-entrenador';
+    const spanM = document.createElement('span');
+    spanM.textContent = 'Mister';
+    const h4Ent = document.createElement('h4');
+    h4Ent.textContent = entrenador.nomPersona;
+    iEnt.append(spanM, h4Ent);
+    banquillo.append(fEnt, iEnt);
+    campo.appendChild(banquillo);
+
     seleccionados.forEach(j => {
         const p = coords[j.posT][vConteo[j.posT]] || coords["COMODIN"][0];
         vConteo[j.posT]++;
-        html += `<div class="ficha-jugador local" style="top:${p.t}%; left:${p.l}%; transform:translate(-50%,-50%)"><div class="contenedor-foto-ficha"><img src="${j.foto}" onerror="this.src='img/logos/default_player.png'"></div><div class="nombre-ficha">${j.nomPersona.split(' ').pop()}</div></div>`;
+        const ficha = document.createElement('div');
+        ficha.className = 'ficha-jugador local';
+        ficha.style.cssText = `top:${p.t}%; left:${p.l}%; transform:translate(-50%,-50%)`;
+        const fotoCont = document.createElement('div');
+        fotoCont.className = 'contenedor-foto-ficha';
+        const imgJ = document.createElement('img');
+        imgJ.src = j.foto;
+        imgJ.onerror = () => imgJ.src = 'img/logos/default_player.png';
+        fotoCont.appendChild(imgJ);
+        const nomF = document.createElement('div');
+        nomF.className = 'nombre-ficha';
+        nomF.textContent = j.nomPersona.split(' ').pop();
+        ficha.append(fotoCont, nomF);
+        campo.appendChild(ficha);
     });
-    contenedor.innerHTML = html + `</div>`;
+    contenedor.appendChild(campo);
 }
 
-// --- RESULTADOS ---
 async function cargarResultados() {
     const contenedor = document.getElementById('contenedor-partidos-plantilla');
     if (!contenedor) return;
     try {
         const res = await fetch('json/partidos.json');
         const partidos = await res.json();
-        contenedor.innerHTML = partidos.map(p => {
+        contenedor.innerHTML = '';
+        partidos.forEach(p => {
             const sL = INFO_ADICIONAL[p.equip_local.nom]?.siglas || p.equip_local.nom.substring(0,3).toUpperCase();
             const sV = INFO_ADICIONAL[p.equip_visitant.nom]?.siglas || p.equip_visitant.nom.substring(0,3).toUpperCase();
-            return `<div class="tarjeta-partido-anterior"><div class="equipo-partido-anterior"><img src="${p.equip_local.escut}"><h2>${sL}</h2><div class="subrayado-verde-anterior"></div></div>
-                    <div class="info-partido-anterior"><h3 class="fecha-partido-anterior">${p.data.split('T')[0]}</h3><h3 class="vs-anterior">${p.resultat}</h3></div>
-                    <div class="equipo-partido-anterior"><img src="${p.equip_visitant.escut}"><h2>${sV}</h2><div class="subrayado-verde-anterior"></div></div></div>`;
-        }).join('');
+            
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'tarjeta-partido-anterior';
+
+            const crearEq = (esc, sig) => {
+                const div = document.createElement('div');
+                div.className = 'equipo-partido-anterior';
+                const img = document.createElement('img');
+                img.src = esc;
+                const h2 = document.createElement('h2');
+                h2.textContent = sig;
+                const sub = document.createElement('div');
+                sub.className = 'subrayado-verde-anterior';
+                div.append(img, h2, sub);
+                return div;
+            };
+
+            const info = document.createElement('div');
+            info.className = 'info-partido-anterior';
+            const h3F = document.createElement('h3');
+            h3F.className = 'fecha-partido-anterior';
+            h3F.textContent = p.data.split('T')[0];
+            const h3R = document.createElement('h3');
+            h3R.className = 'vs-anterior';
+            h3R.textContent = p.resultat;
+            info.append(h3F, h3R);
+
+            tarjeta.append(crearEq(p.equip_local.escut, sL), info, crearEq(p.equip_visitant.escut, sV));
+            contenedor.appendChild(tarjeta);
+        });
     } catch (e) { console.error(e); }
 }
 
-// --- FORMULARIO ---
 function initFormulario() {
     const select = document.getElementById('equipo-select');
     if (!select) return;
     Object.keys(INFO_ADICIONAL).sort().forEach(eq => {
         const opt = document.createElement('option');
-        opt.value = opt.textContent = eq;
+        opt.value = eq;
+        opt.textContent = eq;
         select.appendChild(opt);
     });
     const toggle = () => document.getElementById('seccion-posiciones').style.display = document.getElementById('tipo-jugador').checked ? 'block' : 'none';
@@ -215,7 +425,6 @@ function initFormulario() {
     document.getElementById('tipo-entrenador').onchange = toggle;
 }
 
-// --- INICIALIZADOR ÚNICO ---
 document.addEventListener('DOMContentLoaded', () => {
     mostrarClasificacion();
     cargarEquipos();
